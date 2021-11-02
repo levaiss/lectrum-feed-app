@@ -1,0 +1,17 @@
+.feed-wrapper {
+    display: flex;
+
+    & > div {
+        flex: 1;
+    }
+
+    & .most-recent-comments {
+        max-width: 500px;
+        padding: 10px 0;
+        margin-right: 10px;
+
+        & h1 {
+            text-align: center;
+        }
+    }
+}
