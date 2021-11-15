@@ -5,11 +5,12 @@
 
 html,
 body {
-    height: 100%;
+    min-height: 100%;
 }
 
 body {
     font-family: roboto mono, roboto, system-ui;
+    background-color: var(--paletteColor3);
 
     /* Зачаровать шрифты */
     font-variant-ligatures: none;
@@ -34,7 +35,7 @@ body {
     #root {
         display: flex;
         flex-direction: column;
-        min-height: 100%;
+        min-height: 100vh;
     }
 
     main {
