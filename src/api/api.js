@@ -123,10 +123,10 @@ export const api = {
             return data;
         },
         updateProfile(profileInfo) {
-            return fetch(`${AUTH_URL}/users`, {
+            return fetch(`${AUTH_URL}/profile`, {
                 method:  'PUT',
                 headers: {
-                    Authorization:  this.token,
+                    Authorization:  `Bearer ${api.token}`,
                     'Content-Type': 'application/json',
                 },
                 body: JSON.stringify(profileInfo),
