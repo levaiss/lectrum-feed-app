@@ -1,3 +1,8 @@
+// Core
+import PostsData from '../../mock-data/posts.json';
+import CommentsData from '../../mock-data/comments.json';
+
+// Components
 import { Navigation } from '../../components/Navigation';
 import { Posts } from '../../components/Posts';
 import { RecentComments } from '../../components/RecentComments';
@@ -12,9 +17,10 @@ export const Feed = () => {
                     <div className = 'posts'>
                         <h1 className = 'title'>Стіна</h1>
                         <Composer />
-                        <Posts />
+                        <Posts posts = { PostsData } />
                     </div>
-                    <RecentComments />
+                    <RecentComments
+                        comments = { CommentsData } />
                 </div>
             </div>
         </main>

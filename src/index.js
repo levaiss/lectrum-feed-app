@@ -7,12 +7,17 @@ import 'react-toastify/dist/ReactToastify.css';
 import './theme/init.scss';
 
 // Instruments
+import 'moment-timezone';
 
 // App
 import { App } from './App';
 
-createRoot(document.getElementById('root')).render(
-    <>
-        <App />
-    </>,
-);
+// Components
+import { CommentsFormProvider } from './components/CommentsFormProvider';
+
+createRoot(document.getElementById('root'))
+    .render(
+        <CommentsFormProvider>
+            <App />
+        </CommentsFormProvider>,
+    );
