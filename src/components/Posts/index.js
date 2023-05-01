@@ -1,15 +1,16 @@
+// Components
+import { LoadingOverlay } from '../LoadingOverlay';
 import { Post } from '../Post';
 
-export const Posts = ({ posts }) => {
-    const postsList = posts.map(
-        (post) => <Post
-            post = { post }
-            key = { post.hash } />,
-    );
-
+export const Posts = ({ status, posts }) => {
     return (
-        <div className = 'posts-container'>
-            { postsList }
-        </div>
+        <LoadingOverlay status = { status }>
+            <>
+                { posts?.map((post) => <Post
+                    post = { post }
+                    key = { post.hash } />)
+                }
+            </>
+        </LoadingOverlay>
     );
 };

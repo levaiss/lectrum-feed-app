@@ -20,11 +20,13 @@ module.exports = {
         'plugin:import/warnings',
         'plugin:node/recommended',
         'plugin:react/recommended',
+        'plugin:@tanstack/eslint-plugin-query/recommended',
     ],
     plugins: [
         'no-use-extend-native',
         'promise',
         'react',
+        '@tanstack/query',
     ],
     settings: {
         react: {
@@ -510,5 +512,6 @@ module.exports = {
                 beforeSelfClosing: 'always',
             },
         ],
+        'import/no-extraneous-dependencies': 0,
     },
 };

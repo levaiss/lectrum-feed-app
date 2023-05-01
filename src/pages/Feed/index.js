@@ -1,6 +1,6 @@
 // Core
-import PostsData from '../../mock-data/posts.json';
-import CommentsData from '../../mock-data/comments.json';
+import { usePosts } from '../../hooks/usePosts';
+import { useRecentComments } from '../../hooks/useRecentComments';
 
 // Components
 import { Navigation } from '../../components/Navigation';
@@ -9,6 +9,15 @@ import { RecentComments } from '../../components/RecentComments';
 import { Composer } from '../../components/forms/Composer';
 
 export const Feed = () => {
+    const {
+        status: postsFetchStatus,
+        data: postsData,
+    } = usePosts();
+    const {
+        status: recentCommentsFetchStatus,
+        data: recentCommentsData,
+    } = useRecentComments();
+
     return (
         <main>
             <div className = 'feed-wrapper'>
@@ -17,10 +26,13 @@ export const Feed = () => {
                     <div className = 'posts'>
                         <h1 className = 'title'>Стіна</h1>
                         <Composer />
-                        <Posts posts = { PostsData } />
+                        <Posts
+                            status = { postsFetchStatus }
+                            posts = { postsData } />
                     </div>
                     <RecentComments
-                        comments = { CommentsData } />
+                        status = { recentCommentsFetchStatus }
+                        comments = { recentCommentsData } />
                 </div>
             </div>
         </main>
