@@ -43,3 +43,9 @@ body {
         background-color: var(--paletteColor3);
     }
 }
+
+.status-message {
+  display: block;
+  color: var(--paletteColor2);
+  text-align: center;
+}
