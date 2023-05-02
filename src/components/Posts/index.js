@@ -1,10 +1,10 @@
 import { Post } from '../Post';
 
-export const Posts = () => {
-    const posts = [1, 2, 3];
+export const Posts = ({ posts }) => {
     const postsList = posts.map(
-        (number) => <Post
-            key = { number.toString() } />,
+        (post) => <Post
+            post = { post }
+            key = { post.hash } />,
     );
 
     return (

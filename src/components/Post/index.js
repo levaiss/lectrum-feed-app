@@ -1,27 +1,64 @@
+// Core
+import { useContext, useState } from 'react';
+
 // Components
+import Moment from 'react-moment';
 import { LikeIcon } from '../../theme/assets/like';
 import { CommentIcon } from '../../theme/assets/comment';
+import { CommentsForm } from '../forms/CommentsForm';
+import { Comment } from '../Comment';
 
-export const Post = () => {
+// Instruments
+import { CommentsFormContext } from '../../lib/CommentsFormContext';
+
+export const Post = ({ post }) => {
+    const {
+        activeCommentsForm,
+        setActiveCommentsForm,
+    } = useContext(CommentsFormContext);
+    const isCommentsVisible = activeCommentsForm === post.hash;
+
+    function handlerOnCommentsIconClick() {
+        const newActiveCommentsForm = isCommentsVisible ? null : post.hash;
+        setActiveCommentsForm(newActiveCommentsForm);
+    }
+
     return (
         <section className = 'post'>
-            <img src = 'https://placeimg.com/256/256/animals' alt = 'User avatar' />
-            <a href = '#' title = 'Chuck Norris'>Chuck Norris</a>
-            <time>{ 'про 8 годин тому' }</time>
-            <p>{ 'I\'m not afraid of dying, I\'m afraid of not trying. ~ Jay Z, музичний.' }</p>
+            <img src = { post.author.avatar } alt = { `${post.author.name} avatar` } />
+            <a href = '#' title = 'Chuck Norris'>{ post.author.name }</a>
+            <Moment
+                date = { post.created }
+                fromNow />
+            <p>{ post.body }</p>
             <div className = 'reaction-controls'>
                 <section className = 'like'>
-                    <div><span>0</span></div>
+                    <div><span>{ post.likes.length }</span></div>
                     <span className = 'icon'>
                         <LikeIcon />
-                      Like
+                        Like
                     </span>
                 </section>
-                <span className = 'comment'>
+                <span
+                    onClick = { handlerOnCommentsIconClick }
+                    className = { `comment ${isCommentsVisible ? 'comment-fill' : ''}` }>
                     <CommentIcon className = 'comment-icon' />
-                  1 comment
+                    { post.comments.length } comment
                 </span>
             </div>
+            { isCommentsVisible
+                && <>
+                    <CommentsForm />
+                    <hr className = 'separator' />
+                    <ul>
+                        {
+                            post.comments.map((comment) => <Comment
+                                key = { comment.hash }
+                                comment = { comment } />)
+                        }
+                    </ul>
+                </>
+            }
         </section>
     );
 };

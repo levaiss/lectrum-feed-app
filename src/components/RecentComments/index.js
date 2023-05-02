@@ -1,17 +1,17 @@
 // Components
 import { RecentComment } from '../RecentComment';
 
-export const RecentComments = () => {
-    const comments = [1, 2, 3, 4, 5];
+export const RecentComments = ({ comments }) => {
     const commentsList = comments.map(
-        (number) => <RecentComment
-            key = { number.toString() } />,
+        (comment) => <RecentComment
+            comment = { comment }
+            key = { comment.hash } />,
     );
 
     return (
         <div className = 'most-recent-comments'>
             <h1 className = 'title'>
-          Популярні коментарі
+              Популярні коментарі
             </h1>
             <section>
                 { commentsList }
