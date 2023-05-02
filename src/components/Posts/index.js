@@ -6,7 +6,7 @@ export const Posts = ({ status, posts }) => {
     return (
         <LoadingOverlay status = { status }>
             <>
-                { posts?.map((post) => <Post
+                { Array.isArray(posts) && posts.map((post) => <Post
                     post = { post }
                     key = { post.hash } />)
                 }

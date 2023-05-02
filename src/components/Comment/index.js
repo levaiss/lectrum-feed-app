@@ -5,7 +5,7 @@ export const Comment = ({ comment }) => {
     return (
         <li className = 'commentBody'>
             <p>
-                { comment.author.name }
+                { comment?.author.name }
                 <Moment
                     date = { comment.created }
                     element = 'span'

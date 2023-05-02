@@ -12,9 +12,11 @@ export const RecentComments = ({ status, comments }) => {
                 <LoadingOverlay status = { status }>
                     <>
                         {
-                            comments?.map((comment) => <RecentComment
-                                comment = { comment }
-                                key = { comment.hash } />)
+                            Array.isArray(comments) && comments.map(
+                                (comment) => <RecentComment
+                                    comment = { comment }
+                                    key = { comment.hash } />,
+                            )
                         }
                     </>
                 </LoadingOverlay>

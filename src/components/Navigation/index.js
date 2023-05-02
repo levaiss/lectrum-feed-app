@@ -1,4 +1,10 @@
+import { NavLink } from 'react-router-dom';
+
 export const Navigation = () => {
+    function getNavLinkClasses({ isActive }) {
+        return isActive ? 'navigation-item active' : 'navigation-item';
+    }
+
     return (
         <div>
             <div className = 'navigation-profile'>
@@ -13,8 +19,16 @@ export const Navigation = () => {
                 </div>
               Chuck Norris
             </div>
-            <a href = '#' className = 'navigation-item'>Профіль</a>
-            <a href = '#' className = 'navigation-item active'>Стіна</a>
+            <NavLink
+                to = '/profile'
+                className = { getNavLinkClasses }>
+                Профіль
+            </NavLink>
+            <NavLink
+                to = '/feed'
+                className = { getNavLinkClasses }>
+                Стіна
+            </NavLink>
             <button className = 'logout'>Вийти</button>
         </div>
     );

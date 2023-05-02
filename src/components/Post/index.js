@@ -25,15 +25,15 @@ export const Post = ({ post }) => {
 
     return (
         <section className = 'post'>
-            <img src = { post.author.avatar } alt = { `${post.author.name} avatar` } />
-            <a href = '#' title = 'Chuck Norris'>{ post.author.name }</a>
+            <img src = { post?.author.avatar } alt = { `${post?.author.name} avatar` } />
+            <a href = '#' title = { post?.author.name }>{ post?.author.name }</a>
             <Moment
                 date = { post.created }
                 fromNow />
             <p>{ post.body }</p>
             <div className = 'reaction-controls'>
                 <section className = 'like'>
-                    <div><span>{ post.likes.length }</span></div>
+                    <div><span>{ Array.isArray(post.likes) && post.likes.length }</span></div>
                     <span className = 'icon'>
                         <LikeIcon />
                         Like
@@ -43,7 +43,7 @@ export const Post = ({ post }) => {
                     onClick = { handlerOnCommentsIconClick }
                     className = { `comment ${isCommentsVisible ? 'comment-fill' : ''}` }>
                     <CommentIcon className = 'comment-icon' />
-                    { post.comments.length } comment
+                    { Array.isArray(post.comments) && post.comments.length } comment
                 </span>
             </div>
             { isCommentsVisible
@@ -52,9 +52,11 @@ export const Post = ({ post }) => {
                     <hr className = 'separator' />
                     <ul>
                         {
-                            post.comments.map((comment) => <Comment
-                                key = { comment.hash }
-                                comment = { comment } />)
+                            Array.isArray(post.comments) && post.comments.map(
+                                (comment) => <Comment
+                                    key = { comment.hash }
+                                    comment = { comment } />,
+                            )
                         }
                     </ul>
                 </>
