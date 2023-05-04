@@ -45,6 +45,14 @@ body {
     }
 }
 
+.server-error {
+  max-width: 250px;
+  color: var(--paletteColor25);
+  padding: 12px;
+  margin: 20px 0;
+  border: 1px solid var(--paletteColor25);
+}
+
 .status-message {
   display: block;
   color: var(--paletteColor2);
