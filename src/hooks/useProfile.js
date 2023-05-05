@@ -11,5 +11,6 @@ export function useProfile() {
 
             return data;
         },
+        retry: false,
     });
 }
