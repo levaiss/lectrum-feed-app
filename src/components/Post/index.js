@@ -1,5 +1,5 @@
 // Core
-import { useContext, useState } from 'react';
+import { useContext } from 'react';
 
 // Components
 import Moment from 'react-moment';
@@ -12,10 +12,10 @@ import { Comment } from '../Comment';
 import { CommentsFormContext } from '../../lib/CommentsFormContext';
 
 export const Post = ({ post }) => {
-    const {
+    const [
         activeCommentsForm,
         setActiveCommentsForm,
-    } = useContext(CommentsFormContext);
+    ] = useContext(CommentsFormContext);
     const isCommentsVisible = activeCommentsForm === post.hash;
 
     function handlerOnCommentsIconClick() {

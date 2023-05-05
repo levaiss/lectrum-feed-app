@@ -5,12 +5,10 @@ import { useMutation } from '@tanstack/react-query';
 import { api } from '../api';
 import { AUTH_TOKEN_KAY } from '../api/config';
 
-export function useSignUp() {
+export function useLogin() {
     const mutation = useMutation({
-        mutationFn: async (userInfo) => {
-            const response = await api.auth.signup(userInfo);
-
-            return response.json();
+        mutationFn: (credentials) => {
+            return api.auth.login(credentials);
         },
     });
 

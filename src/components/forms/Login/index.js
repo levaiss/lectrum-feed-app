@@ -9,45 +9,39 @@ import { yupResolver } from '@hookform/resolvers/yup';
 import { UiInput } from '../../Ui/UiInput';
 
 // Hooks
-import { useSignUp } from '../../../hooks/useSignUp';
+import { useLogin } from '../../../hooks/useLogin';
 
 // Instruments
-import { SignUpFormSchema } from './config';
+import { LoginFormSchema } from './config';
 
-export const SignUp = () => {
-    const signUp = useSignUp();
+export const Login = () => {
+    const login = useLogin();
     const navigate = useNavigate();
     const form = useForm({
         mode:          'onChange',
-        resolver:      yupResolver(SignUpFormSchema),
+        resolver:      yupResolver(LoginFormSchema),
         defaultValues: {
-            name:            '',
-            email:           '',
-            password:        '',
-            confirmPassword: '',
+            email:    '',
+            password: '',
         },
     });
 
-    const submitForm = form.handleSubmit(async (payload) => {
-        const {
-            confirmPassword,
-            ...userInfo
-        } = payload;
-
-        const { statusCode, message } = await signUp.mutateAsync(userInfo);
-        if (statusCode > 200) {
+    const submitForm = form.handleSubmit(async (credentials) => {
+        try {
+            await login.mutateAsync(credentials);
+            form.reset();
+            navigate('/feed');
+        } catch (error) {
+            const { response: { data: { statusCode, message } } } = error;
             form.setError('root.serverError', {
                 type: statusCode,
                 message,
             });
-        } else {
-            form.reset();
-            navigate('/feed');
         }
     });
 
     useEffect(() => {
-        form.setFocus('name');
+        form.setFocus('email');
     }, []);
 
     return (
@@ -57,11 +51,6 @@ export const SignUp = () => {
             <div className = 'wrapper centered'>
                 <div className = 'logo'></div>
                 <div>
-                    <UiInput
-                        placeholder = "Ім'я"
-                        autoComplete = 'name'
-                        error = { form.formState.errors.name }
-                        register = { form.register('name') } />
                     <UiInput
                         placeholder = 'Пошта'
                         autoComplete = 'email'
@@ -73,23 +62,18 @@ export const SignUp = () => {
                         type = 'password'
                         error = { form.formState.errors.password }
                         register = { form.register('password') } />
-                    <UiInput
-                        placeholder = 'Повторіть пароль'
-                        type = 'password'
-                        error = { form.formState.errors.confirmPassword }
-                        register = { form.register('confirmPassword') } />
                     {
                         form.formState.errors.root?.serverError
                         && <div className = 'server-error'><p>{ form.formState.errors.root?.serverError.message }</p></div>
                     }
                     <button
                         type = 'submit'
-                        className = 'signupSubmit'>
-                        Створити акаунт
+                        className = 'loginSubmit'>
+                        Увійти
                     </button>
                 </div>
                 <p className = 'options'>
-                    Є обліковий запис? <NavLink to = '/login'>Увійти</NavLink>
+                    Немає облікового запису? <NavLink to = '/signup'>Створити</NavLink>
                 </p>
             </div>
         </form>

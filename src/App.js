@@ -3,6 +3,7 @@ import { Routes, Route } from 'react-router-dom';
 
 // Components
 import { DefaultLayout } from './layouts/DefaultLayout';
+import { LoginPage } from './pages/LoginPage';
 import { SignUpPage } from './pages/SignUpPage';
 import { Feed } from './pages/Feed';
 import { PostCommentsPage } from './pages/PostCommentsPage';
@@ -15,6 +16,7 @@ export const App = () => {
         <>
             <Routes>
                 <Route index element = { <main><h1>Home page</h1></main> } />
+                <Route path = 'login' element = { <LoginPage /> } />
                 <Route path = 'signup' element = { <SignUpPage /> } />
                 <Route element = { <DefaultLayout /> }>
                     <Route path = 'feed' element = { <Feed /> } />
