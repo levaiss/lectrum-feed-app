@@ -1,17 +1,15 @@
-export const UiInput = (props) => {
+export const UiInput = ({
+    type = 'text', label, name, placeholder, register, error,
+}) => {
     return (
         <label className = 'ui-input'>
-            <div>{ props.label }</div>
+            <div>{ label }</div>
             <input
-                name = { props.name }
-                type = { props.type }
-                placeholder = { props.placeholder }
-                { ...props.register } />
-            { props.error && <span className = 'ui-input__error-message'>{ props.error.message }</span> }
+                name = { name }
+                type = { type }
+                placeholder = { placeholder }
+                { ...register } />
+            { error && <span className = 'ui-input__error-message'>{ error.message }</span> }
         </label>
     );
-};
-
-UiInput.defaultProps = {
-    type: 'text',
 };
