@@ -6,6 +6,7 @@ import { yupResolver } from '@hookform/resolvers/yup';
 
 // Components
 import { UiInput } from '../../Ui/UiInput';
+import { UiAvatar } from '../../Ui/UiAvatar';
 
 // Hooks
 import { useUpdateProfile } from '../../../hooks/useUpdateProfile';
@@ -55,7 +56,7 @@ export const Profile = () => {
             <div className = 'wrapper'>
                 <div>
                     <h1>Привіт, { currentUser?.name }</h1>
-                    <img src = { currentUser?.avatar } alt = 'User avatar' />
+                    <UiAvatar src = { currentUser?.avatar } alt = 'User avatar' />
                     <UiInput
                         placeholder = "Ім'я"
                         autoComplete = 'firstName'
