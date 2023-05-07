@@ -1,5 +1,5 @@
 export const UiInput = ({
-    type = 'text', label, name, placeholder, register, error,
+    type = 'text', label, name, placeholder, autoFocus, autoComplete, register, error,
 }) => {
     return (
         <label className = 'ui-input'>
@@ -8,6 +8,7 @@ export const UiInput = ({
                 name = { name }
                 type = { type }
                 placeholder = { placeholder }
+                { ...{ autoFocus, autoComplete } }
                 { ...register } />
             { error && <span className = 'ui-input__error-message'>{ error.message }</span> }
         </label>

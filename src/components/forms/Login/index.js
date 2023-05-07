@@ -1,5 +1,4 @@
 /* Core */
-import { useEffect } from 'react';
 import { useNavigate, NavLink } from 'react-router-dom';
 import { useForm } from 'react-hook-form';
 import { yupResolver } from '@hookform/resolvers/yup';
@@ -17,7 +16,13 @@ import { LoginFormSchema } from './config';
 export const Login = () => {
     const login = useLogin();
     const navigate = useNavigate();
-    const form = useForm({
+    const {
+        handleSubmit,
+        formState,
+        register,
+        reset,
+        setError,
+    } = useForm({
         mode:          'onChange',
         resolver:      yupResolver(LoginFormSchema),
         defaultValues: {
@@ -26,23 +31,19 @@ export const Login = () => {
         },
     });
 
-    const submitForm = form.handleSubmit(async (credentials) => {
-        try {
-            await login.mutateAsync(credentials);
-            form.reset();
-            navigate('/feed');
-        } catch (error) {
-            const { response: { data: { statusCode, message } } } = error;
-            form.setError('root.serverError', {
-                type: statusCode,
-                message,
-            });
-        }
+    const submitForm = handleSubmit(async (credentials) => {
+        await login.mutateAsync(credentials, {
+            onError: (error) => {
+                const { response: { data: { statusCode, message } } } = error;
+                setError('root.serverError', {
+                    type: statusCode,
+                    message,
+                });
+            },
+        });
+        reset();
+        navigate('/feed');
     });
-
-    useEffect(() => {
-        form.setFocus('email');
-    }, []);
 
     return (
         <form
@@ -55,16 +56,17 @@ export const Login = () => {
                         placeholder = 'Пошта'
                         autoComplete = 'email'
                         type = 'email'
-                        error = { form.formState.errors.email }
-                        register = { form.register('email') } />
+                        autoFocus
+                        error = { formState.errors.email }
+                        register = { register('email') } />
                     <UiInput
                         placeholder = 'Пароль'
                         type = 'password'
-                        error = { form.formState.errors.password }
-                        register = { form.register('password') } />
+                        error = { formState.errors.password }
+                        register = { register('password') } />
                     {
-                        form.formState.errors.root?.serverError
-                        && <div className = 'server-error'><p>{ form.formState.errors.root?.serverError.message }</p></div>
+                        formState.errors.root?.serverError
+                        && <div className = 'server-error'><p>{ formState.errors.root?.serverError.message }</p></div>
                     }
                     <button
                         type = 'submit'

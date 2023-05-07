@@ -18,7 +18,14 @@ import { ProfileFormSchema } from './config';
 export const Profile = () => {
     const [currentUser, setCurrentUser] = useContext(UserContext);
     const updateProfile = useUpdateProfile();
-    const form = useForm({
+    const {
+        handleSubmit,
+        formState,
+        register,
+        reset,
+        setValue,
+        setError,
+    } = useForm({
         mode:          'onChange',
         resolver:      yupResolver(ProfileFormSchema),
         defaultValues: {
@@ -27,27 +34,27 @@ export const Profile = () => {
         },
     });
 
+    const submitForm = handleSubmit(async (profileInfo) => {
+        const { data: updatedUser } = await updateProfile.mutateAsync(profileInfo, {
+            onError: (error) => {
+                const { response: { data: { statusCode, message } } } = error;
+                setError('root.serverError', {
+                    type: statusCode,
+                    message,
+                });
+            },
+        });
+        reset();
+        setCurrentUser(updatedUser);
+    });
+
     useEffect(() => {
         if (currentUser?.name) {
             const [firstName, lastName] = currentUser.name.split(' ');
-            form.setValue('firstName', firstName);
-            form.setValue('lastName', lastName);
+            setValue('firstName', firstName);
+            setValue('lastName', lastName);
         }
     }, [currentUser]);
-
-    const submitForm = form.handleSubmit(async (profileInfo) => {
-        try {
-            const { data: updatedUser } = await updateProfile.mutateAsync(profileInfo);
-            form.reset();
-            setCurrentUser(updatedUser);
-        } catch (error) {
-            const { response: { data: { statusCode, message } } } = error;
-            form.setError('root.serverError', {
-                type: statusCode,
-                message,
-            });
-        }
-    });
 
     return (
         <form
@@ -60,16 +67,17 @@ export const Profile = () => {
                     <UiInput
                         placeholder = "Ім'я"
                         autoComplete = 'firstName'
-                        error = { form.formState.errors.firstName }
-                        register = { form.register('firstName') } />
+                        autoFocus
+                        error = { formState.errors.firstName }
+                        register = { register('firstName') } />
                     <UiInput
                         placeholder = 'Призвіще'
                         autoComplete = 'lastName'
-                        error = { form.formState.errors.lastName }
-                        register = { form.register('lastName') } />
+                        error = { formState.errors.lastName }
+                        register = { register('lastName') } />
                     {
-                        form.formState.errors.root?.serverError
-                        && <div className = 'server-error'><p>{ form.formState.errors.root?.serverError.message }</p></div>
+                        formState.errors.root?.serverError
+                        && <div className = 'server-error'><p>{ formState.errors.root?.serverError.message }</p></div>
                     }
                     <button className = 'loginSubmit' type = 'submit'>
                         Оновити профіль
