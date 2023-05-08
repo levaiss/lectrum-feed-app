@@ -1,8 +1,19 @@
+// Core
+import { useContext } from 'react';
+
+// Components
+import { UiAvatar } from '../../Ui/UiAvatar';
+
+// Instruments
+import { UserContext } from '../../../lib/UserContext';
+
 export const CommentsForm = () => {
+    const [currentUser] = useContext(UserContext);
+
     return (
         <form className = 'commentForm'>
-            <img
-                src = 'https://placeimg.com/256/256/animals'
+            <UiAvatar
+                src = { currentUser?.avatar }
                 className = 'comment-avatar'
                 alt = 'User avatar' />
             <label>

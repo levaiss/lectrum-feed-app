@@ -1,6 +1,16 @@
+// Core
+import { useContext } from 'react';
 import { NavLink } from 'react-router-dom';
 
+// Components
+import { UiAvatar } from '../Ui/UiAvatar';
+
+// Instruments
+import { UserContext } from '../../lib/UserContext';
+
 export const Navigation = () => {
+    const [currentUser] = useContext(UserContext);
+
     function getNavLinkClasses({ isActive }) {
         return isActive ? 'navigation-item active' : 'navigation-item';
     }
@@ -9,15 +19,15 @@ export const Navigation = () => {
         <div>
             <div className = 'navigation-profile'>
                 <div className = 'profile-wrapper'>
-                    <img
-                        src = 'https://placeimg.com/256/256/animals'
+                    <UiAvatar
+                        src = { currentUser?.avatar }
                         alt = 'User avatar'
-                        className = 'navigation-avatar'  />
+                        className = 'navigation-avatar' />
                     <div className = 'user-status'>
                         <div className = 'status online'><span></span></div>
                     </div>
                 </div>
-              Chuck Norris
+                { currentUser?.name }
             </div>
             <NavLink
                 to = '/profile'

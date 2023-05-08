@@ -1,5 +1,5 @@
 // Components
-import { Profile } from '../../components/Profile';
+import { Profile } from '../../components/forms/Profile';
 
 export const ProfilePage = () => {
     return (

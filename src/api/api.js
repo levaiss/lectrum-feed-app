@@ -2,11 +2,11 @@
 import axios from 'axios';
 
 // Instruments
-import { AUTH_URL, FEED_URL } from './config';
+import { AUTH_URL, FEED_URL, AUTH_TOKEN_KAY } from './config';
 
 export const api = {
     get token() {
-        return localStorage.getItem('token');
+        return localStorage.getItem(AUTH_TOKEN_KAY);
     },
     auth: {
         signup(userInfo) {
@@ -90,7 +90,10 @@ export const api = {
                 },
             });
         },
-        async comment({ hash, body }) {
+        async comment({
+            hash,
+            body,
+        }) {
             const { data } = await axios.put(`${FEED_URL}/${hash}/comment`,
                 { body },
                 {

@@ -1,5 +1,5 @@
 // Core
-import { useContext, useState } from 'react';
+import { useContext } from 'react';
 
 // Components
 import Moment from 'react-moment';
@@ -7,15 +7,16 @@ import { LikeIcon } from '../../theme/assets/like';
 import { CommentIcon } from '../../theme/assets/comment';
 import { CommentsForm } from '../forms/CommentsForm';
 import { Comment } from '../Comment';
+import { UiAvatar } from '../Ui/UiAvatar';
 
 // Instruments
 import { CommentsFormContext } from '../../lib/CommentsFormContext';
 
 export const Post = ({ post }) => {
-    const {
+    const [
         activeCommentsForm,
         setActiveCommentsForm,
-    } = useContext(CommentsFormContext);
+    ] = useContext(CommentsFormContext);
     const isCommentsVisible = activeCommentsForm === post.hash;
 
     function handlerOnCommentsIconClick() {
@@ -25,7 +26,7 @@ export const Post = ({ post }) => {
 
     return (
         <section className = 'post'>
-            <img src = { post?.author.avatar } alt = { `${post?.author.name} avatar` } />
+            <UiAvatar src = { post?.author.avatar } alt = { `${post?.author.name} avatar` } />
             <a href = '#' title = { post?.author.name }>{ post?.author.name }</a>
             <Moment
                 date = { post.created }
