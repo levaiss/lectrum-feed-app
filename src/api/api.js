@@ -8,6 +8,12 @@ export const api = {
     get token() {
         return localStorage.getItem(AUTH_TOKEN_KAY);
     },
+    setToken(token) {
+        return localStorage.setItem(AUTH_TOKEN_KAY, token);
+    },
+    removeToken() {
+        return localStorage.removeItem(AUTH_TOKEN_KAY);
+    },
     auth: {
         signup(userInfo) {
             return fetch(`${AUTH_URL}/register`, {
@@ -29,8 +35,8 @@ export const api = {
 
             return data;
         },
-        async auth() {
-            await axios.get(`${AUTH_URL}/auth`, {
+        auth() {
+            return axios.get(`${AUTH_URL}/auth`, {
                 headers: {
                     Authorization: `Bearer ${api.token}`,
                 },

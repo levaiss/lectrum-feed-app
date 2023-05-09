@@ -1,14 +1,14 @@
 // Core
-import { useContext } from 'react';
+import { observer } from 'mobx-react-lite';
 
 // Components
 import { UiAvatar } from '../../Ui/UiAvatar';
 
-// Instruments
-import { UserContext } from '../../../lib/UserContext';
+// Hooks
+import { useStore } from '../../../hooks/useStore';
 
-export const Composer = () => {
-    const [currentUser] = useContext(UserContext);
+export const Composer = observer(() => {
+    const { userStore: { user: currentUser } } = useStore();
 
     return (
         <section className = 'composer'>
@@ -21,4 +21,4 @@ export const Composer = () => {
             </form>
         </section>
     );
-};
+});

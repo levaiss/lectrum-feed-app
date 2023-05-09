@@ -1,15 +1,26 @@
 // Core
-import { useContext } from 'react';
+import { useEffect } from 'react';
 import { NavLink } from 'react-router-dom';
+import { observer } from 'mobx-react-lite';
 
 // Components
 import { UiAvatar } from '../Ui/UiAvatar';
 
 // Instruments
-import { UserContext } from '../../lib/UserContext';
+import { useProfile } from '../../hooks/useProfile';
+import { useStore } from '../../hooks/useStore';
 
-export const Navigation = () => {
-    const [currentUser] = useContext(UserContext);
+export const Navigation = observer(() => {
+    const {
+        data: userData,
+    } = useProfile();
+    const { userStore: { user: currentUser, setUser } } = useStore();
+
+    useEffect(() => {
+        if (userData) {
+            setUser(userData);
+        }
+    }, [userData]);
 
     function getNavLinkClasses({ isActive }) {
         return isActive ? 'navigation-item active' : 'navigation-item';
@@ -42,4 +53,4 @@ export const Navigation = () => {
             <button className = 'logout'>Вийти</button>
         </div>
     );
-};
+});

@@ -1,14 +1,14 @@
 // Core
-import { useContext } from 'react';
+import { observer } from 'mobx-react-lite';
 
 // Components
 import { UiAvatar } from '../../Ui/UiAvatar';
 
-// Instruments
-import { UserContext } from '../../../lib/UserContext';
+// Hooks
+import { useStore } from '../../../hooks/useStore';
 
-export const CommentsForm = () => {
-    const [currentUser] = useContext(UserContext);
+export const CommentsForm = observer(() => {
+    const { userStore: { user: currentUser } } = useStore();
 
     return (
         <form className = 'commentForm'>
@@ -27,4 +27,4 @@ export const CommentsForm = () => {
             </button>
         </form>
     );
-};
+});

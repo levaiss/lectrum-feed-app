@@ -1,5 +1,8 @@
 // Core
+import { useEffect } from 'react';
 import { useQuery } from '@tanstack/react-query';
+
+// Instruments
 import { api } from '../api';
 
 
@@ -11,6 +14,5 @@ export function useProfile() {
 
             return data;
         },
-        retry: false,
     });
 }

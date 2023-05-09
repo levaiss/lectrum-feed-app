@@ -1,8 +1,9 @@
 // Core
-import { useContext, useEffect } from 'react';
+import { useEffect } from 'react';
 import { NavLink } from 'react-router-dom';
 import { useForm } from 'react-hook-form';
 import { yupResolver } from '@hookform/resolvers/yup';
+import { observer } from 'mobx-react-lite';
 
 // Components
 import { UiInput } from '../../Ui/UiInput';
@@ -10,13 +11,13 @@ import { UiAvatar } from '../../Ui/UiAvatar';
 
 // Hooks
 import { useUpdateProfile } from '../../../hooks/useUpdateProfile';
+import { useStore } from '../../../hooks/useStore';
 
 // Instruments
-import { UserContext } from '../../../lib/UserContext';
 import { ProfileFormSchema } from './config';
 
-export const Profile = () => {
-    const [currentUser, setCurrentUser] = useContext(UserContext);
+export const Profile = observer(() => {
+    const { userStore: { user: currentUser } } = useStore();
     const updateProfile = useUpdateProfile();
     const {
         handleSubmit,
@@ -35,7 +36,7 @@ export const Profile = () => {
     });
 
     const submitForm = handleSubmit(async (profileInfo) => {
-        const { data: updatedUser } = await updateProfile.mutateAsync(profileInfo, {
+        await updateProfile.mutateAsync(profileInfo, {
             onError: (error) => {
                 const { response: { data: { statusCode, message } } } = error;
                 setError('root.serverError', {
@@ -45,12 +46,12 @@ export const Profile = () => {
             },
         });
         reset();
-        setCurrentUser(updatedUser);
     });
 
     useEffect(() => {
-        if (currentUser?.name) {
-            const [firstName, lastName] = currentUser.name.split(' ');
+        const userName = currentUser?.name;
+        if (userName) {
+            const [firstName, lastName] = userName.split(' ');
             setValue('firstName', firstName);
             setValue('lastName', lastName);
         }
@@ -90,4 +91,4 @@ export const Profile = () => {
             </div>
         </form>
     );
-};
+});
