@@ -15,14 +15,14 @@ export const api = {
         return localStorage.removeItem(AUTH_TOKEN_KAY);
     },
     auth: {
-        signup(userInfo) {
-            return fetch(`${AUTH_URL}/register`, {
-                method:  'POST',
+        async signup(userInfo) {
+            const { data } = await axios.post(`${AUTH_URL}/register`, userInfo, {
                 headers: {
                     'Content-Type': 'application/json',
                 },
-                body: JSON.stringify(userInfo),
             });
+
+            return data;
         },
         async login(credentials) {
             const { data } = await axios.post(`${AUTH_URL}/login`,
@@ -131,15 +131,14 @@ export const api = {
 
             return data;
         },
-        updateProfile(profileInfo) {
-            return fetch(`${AUTH_URL}/profile`, {
-                method:  'PUT',
+        async updateProfile(profileInfo) {
+            const { data } = await axios.put(`${AUTH_URL}/profile`, profileInfo, {
                 headers: {
-                    Authorization:  `Bearer ${api.token}`,
-                    'Content-Type': 'application/json',
+                    Authorization: `Bearer ${api.token}`,
                 },
-                body: JSON.stringify(profileInfo),
             });
+
+            return data;
         },
         updateAvatar(avatarFormData) {
             return fetch(`${AUTH_URL}/image`, {

@@ -1,6 +1,6 @@
 export const toastOptions = Object.freeze({
     position:        'top-right',
-    autoClose:       7000,
+    autoClose:       5000,
     hideProgressBar: false,
     closeOnClick:    true,
     pauseOnHover:    true,

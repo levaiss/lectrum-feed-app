@@ -1,7 +1,10 @@
 // Core
 import { Routes, Route } from 'react-router-dom';
+import { observer } from 'mobx-react-lite';
 
 // Components
+import { toast, ToastContainer, Slide } from 'react-toastify';
+import { useEffect } from 'react';
 import { DefaultLayout } from './layouts/DefaultLayout';
 import { HomePage } from './pages/HomePage';
 import { LoginPage } from './pages/LoginPage';
@@ -14,9 +17,25 @@ import { Footer } from './components/Footer';
 import { PrivateRoute } from './components/PrivateRoute';
 import { PublicRoute } from './components/PublicRoute';
 
-export const App = () => {
+// Hooks
+import { useStore } from './hooks/useStore';
+
+// Instrument
+import { toastOptions } from './constants/toastOptions';
+
+export const App = observer(() => {
+    const { uiStore: { errorMessage, setErrorMessage } } = useStore();
+
+    useEffect(() => {
+        if (errorMessage) {
+            toast.error(errorMessage, toastOptions);
+            setErrorMessage(null);
+        }
+    }, [errorMessage]);
+
     return (
         <>
+            <ToastContainer newestOnTop transition = { Slide } />
             <Routes>
                 <Route index element = { <PublicRoute><HomePage /></PublicRoute> } />
                 <Route element = {
@@ -39,4 +58,4 @@ export const App = () => {
             <Footer />
         </>
     );
-};
+});

@@ -2,6 +2,7 @@
 import { useNavigate, NavLink } from 'react-router-dom';
 import { useForm } from 'react-hook-form';
 import { yupResolver } from '@hookform/resolvers/yup';
+import { observer } from 'mobx-react-lite';
 
 
 // Components
@@ -13,7 +14,7 @@ import { useSignUp } from '../../../hooks/useSignUp';
 // Instruments
 import { SignUpFormSchema } from './config';
 
-export const SignUp = () => {
+export const SignUp = observer(() => {
     const signUp = useSignUp();
     const navigate = useNavigate();
     const {
@@ -21,7 +22,6 @@ export const SignUp = () => {
         formState,
         reset,
         register,
-        setError,
     } = useForm({
         mode:          'onChange',
         resolver:      yupResolver(SignUpFormSchema),
@@ -39,16 +39,9 @@ export const SignUp = () => {
             ...userInfo
         } = payload;
 
-        const { statusCode, message } = await signUp.mutateAsync(userInfo);
-        if (statusCode > 200) {
-            setError('root.serverError', {
-                type: statusCode,
-                message,
-            });
-        } else {
-            reset();
-            navigate('/feed');
-        }
+        await signUp.mutateAsync(userInfo);
+        reset();
+        navigate('/feed');
     });
 
     return (
@@ -80,10 +73,6 @@ export const SignUp = () => {
                         type = 'password'
                         error = { formState.errors.confirmPassword }
                         register = { register('confirmPassword') } />
-                    {
-                        formState.errors.root?.serverError
-                        && <div className = 'server-error'><p>{ formState.errors.root?.serverError.message }</p></div>
-                    }
                     <button
                         type = 'submit'
                         className = 'signupSubmit'>
@@ -96,4 +85,4 @@ export const SignUp = () => {
             </div>
         </form>
     );
-};
+});

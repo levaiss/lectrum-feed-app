@@ -1,21 +1,17 @@
 // Core
 import { makeAutoObservable } from 'mobx';
 
-class UserStore {
-    user = null;
+class UiStore {
+    errorMessage = null;
     constructor() {
         makeAutoObservable(this, { rootStore: false }, {
             autoBind: true,
         });
     }
 
-    setUser(payload) {
-        this.user = payload;
-    }
-
-    get userName() {
-        return this.user?.name;
+    setErrorMessage(payload) {
+        this.errorMessage = payload;
     }
 }
 
-export { UserStore };
+export { UiStore };

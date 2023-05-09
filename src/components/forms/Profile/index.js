@@ -17,7 +17,7 @@ import { useStore } from '../../../hooks/useStore';
 import { ProfileFormSchema } from './config';
 
 export const Profile = observer(() => {
-    const { userStore: { user: currentUser } } = useStore();
+    const { userStore: { user: currentUser, userName } } = useStore();
     const updateProfile = useUpdateProfile();
     const {
         handleSubmit,
@@ -25,7 +25,6 @@ export const Profile = observer(() => {
         register,
         reset,
         setValue,
-        setError,
     } = useForm({
         mode:          'onChange',
         resolver:      yupResolver(ProfileFormSchema),
@@ -35,27 +34,24 @@ export const Profile = observer(() => {
         },
     });
 
+    const fillForm = () => {
+        if (userName) {
+            const [
+                firstName,
+                lastName,
+            ] = `${userName}`.split(' ');
+            setValue('firstName', firstName);
+            setValue('lastName', lastName);
+        }
+    };
     const submitForm = handleSubmit(async (profileInfo) => {
-        await updateProfile.mutateAsync(profileInfo, {
-            onError: (error) => {
-                const { response: { data: { statusCode, message } } } = error;
-                setError('root.serverError', {
-                    type: statusCode,
-                    message,
-                });
-            },
-        });
+        await updateProfile.mutateAsync(profileInfo);
         reset();
     });
 
     useEffect(() => {
-        const userName = currentUser?.name;
-        if (userName) {
-            const [firstName, lastName] = userName.split(' ');
-            setValue('firstName', firstName);
-            setValue('lastName', lastName);
-        }
-    }, [currentUser]);
+        fillForm();
+    }, [userName]);
 
     return (
         <form
@@ -63,7 +59,7 @@ export const Profile = observer(() => {
             className = 'form'>
             <div className = 'wrapper'>
                 <div>
-                    <h1>Привіт, { currentUser?.name }</h1>
+                    <h1>Привіт, { userName }</h1>
                     <UiAvatar src = { currentUser?.avatar } alt = 'User avatar' />
                     <UiInput
                         placeholder = "Ім'я"
@@ -76,10 +72,6 @@ export const Profile = observer(() => {
                         autoComplete = 'lastName'
                         error = { formState.errors.lastName }
                         register = { register('lastName') } />
-                    {
-                        formState.errors.root?.serverError
-                        && <div className = 'server-error'><p>{ formState.errors.root?.serverError.message }</p></div>
-                    }
                     <button className = 'loginSubmit' type = 'submit'>
                         Оновити профіль
                     </button>

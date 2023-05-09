@@ -1,3 +1,6 @@
+// Core
+import { observer } from 'mobx-react-lite';
+
 // Components
 import { Posts } from '../../components/Posts';
 import { RecentComments } from '../../components/RecentComments';
@@ -7,7 +10,7 @@ import { Composer } from '../../components/forms/Composer';
 import { usePosts } from '../../hooks/usePosts';
 import { useRecentComments } from '../../hooks/useRecentComments';
 
-export const Feed = () => {
+export const Feed = observer(() => {
     const {
         status: postsFetchStatus,
         data: postsData,
@@ -31,4 +34,4 @@ export const Feed = () => {
                 comments = { recentCommentsData } />
         </>
     );
-};
+});

@@ -9,11 +9,18 @@ import { useStore } from './useStore';
 import { api } from '../api';
 
 export function useLogin() {
-    const { authStore: { setToken } } = useStore();
+    const {
+        authStore: { setToken },
+        uiStore: { setErrorMessage },
+    } = useStore();
     const queryClient = useQueryClient();
     const mutation = useMutation({
         mutationFn: (credentials) => {
             return api.auth.login(credentials);
+        },
+        onError: (error) => {
+            const message = error?.response?.data?.message || error?.message;
+            setErrorMessage(message);
         },
     });
 
