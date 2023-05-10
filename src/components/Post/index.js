@@ -1,5 +1,5 @@
 // Core
-import { useContext } from 'react';
+import { observer } from 'mobx-react-lite';
 
 // Components
 import Moment from 'react-moment';
@@ -9,19 +9,21 @@ import { CommentsForm } from '../forms/CommentsForm';
 import { Comment } from '../Comment';
 import { UiAvatar } from '../Ui/UiAvatar';
 
-// Instruments
-import { CommentsFormContext } from '../../lib/CommentsFormContext';
+// Hoots
+import { useStore } from '../../hooks/useStore';
 
-export const Post = ({ post }) => {
-    const [
-        activeCommentsForm,
-        setActiveCommentsForm,
-    ] = useContext(CommentsFormContext);
-    const isCommentsVisible = activeCommentsForm === post.hash;
+export const Post = observer(({ post }) => {
+    const {
+        feedStore: {
+            activePostId,
+            setActivePostId,
+        },
+    } = useStore();
+    const isCommentsVisible = activePostId === post.hash;
 
     function handlerOnCommentsIconClick() {
-        const newActiveCommentsForm = isCommentsVisible ? null : post.hash;
-        setActiveCommentsForm(newActiveCommentsForm);
+        const newActivePostId = isCommentsVisible ? null : post.hash;
+        setActivePostId(newActivePostId);
     }
 
     return (
@@ -64,4 +66,4 @@ export const Post = ({ post }) => {
             }
         </section>
     );
-};
+});

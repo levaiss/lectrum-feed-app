@@ -1,16 +1,26 @@
 // Core
 import { useEffect } from 'react';
-import { useMutation } from '@tanstack/react-query';
+import { useMutation, useQueryClient } from '@tanstack/react-query';
 
+// Hooks
+import { useStore } from './useStore';
+
+// Instruments
 import { api } from '../api';
-import { AUTH_TOKEN_KAY } from '../api/config';
 
 export function useSignUp() {
+    const {
+        authStore: { setToken },
+        uiStore: { setErrorMessage },
+    } = useStore();
+    const queryClient = useQueryClient();
     const mutation = useMutation({
-        mutationFn: async (userInfo) => {
-            const response = await api.auth.signup(userInfo);
-
-            return response.json();
+        mutationFn: (userInfo) => {
+            return api.auth.signup(userInfo);
+        },
+        onError: (error) => {
+            const message = error?.response?.data?.message || error?.message;
+            setErrorMessage(message);
         },
     });
 
@@ -18,7 +28,9 @@ export function useSignUp() {
         const token = mutation.data?.data;
 
         if (mutation.isSuccess && token) {
-            localStorage.setItem(AUTH_TOKEN_KAY, token);
+            api.setToken(token);
+            setToken(token);
+            queryClient.invalidateQueries({ queryKey: ['profile'] });
         }
     }, [mutation.isSuccess]);
 

@@ -2,7 +2,7 @@
 import { useNavigate, NavLink } from 'react-router-dom';
 import { useForm } from 'react-hook-form';
 import { yupResolver } from '@hookform/resolvers/yup';
-
+import { observer } from 'mobx-react-lite';
 
 // Components
 import { UiInput } from '../../Ui/UiInput';
@@ -13,7 +13,7 @@ import { useLogin } from '../../../hooks/useLogin';
 // Instruments
 import { LoginFormSchema } from './config';
 
-export const Login = () => {
+export const Login = observer(() => {
     const login = useLogin();
     const navigate = useNavigate();
     const {
@@ -21,7 +21,6 @@ export const Login = () => {
         formState,
         register,
         reset,
-        setError,
     } = useForm({
         mode:          'onChange',
         resolver:      yupResolver(LoginFormSchema),
@@ -32,15 +31,7 @@ export const Login = () => {
     });
 
     const submitForm = handleSubmit(async (credentials) => {
-        await login.mutateAsync(credentials, {
-            onError: (error) => {
-                const { response: { data: { statusCode, message } } } = error;
-                setError('root.serverError', {
-                    type: statusCode,
-                    message,
-                });
-            },
-        });
+        await login.mutateAsync(credentials);
         reset();
         navigate('/feed');
     });
@@ -64,10 +55,6 @@ export const Login = () => {
                         type = 'password'
                         error = { formState.errors.password }
                         register = { register('password') } />
-                    {
-                        formState.errors.root?.serverError
-                        && <div className = 'server-error'><p>{ formState.errors.root?.serverError.message }</p></div>
-                    }
                     <button
                         type = 'submit'
                         className = 'loginSubmit'>
@@ -80,4 +67,4 @@ export const Login = () => {
             </div>
         </form>
     );
-};
+});

@@ -1,8 +1,9 @@
 // Core
-import { useContext, useEffect } from 'react';
+import { useEffect } from 'react';
 import { NavLink } from 'react-router-dom';
 import { useForm } from 'react-hook-form';
 import { yupResolver } from '@hookform/resolvers/yup';
+import { observer } from 'mobx-react-lite';
 
 // Components
 import { UiInput } from '../../Ui/UiInput';
@@ -10,13 +11,13 @@ import { UiAvatar } from '../../Ui/UiAvatar';
 
 // Hooks
 import { useUpdateProfile } from '../../../hooks/useUpdateProfile';
+import { useStore } from '../../../hooks/useStore';
 
 // Instruments
-import { UserContext } from '../../../lib/UserContext';
 import { ProfileFormSchema } from './config';
 
-export const Profile = () => {
-    const [currentUser, setCurrentUser] = useContext(UserContext);
+export const Profile = observer(() => {
+    const { userStore: { user: currentUser, userName } } = useStore();
     const updateProfile = useUpdateProfile();
     const {
         handleSubmit,
@@ -24,7 +25,6 @@ export const Profile = () => {
         register,
         reset,
         setValue,
-        setError,
     } = useForm({
         mode:          'onChange',
         resolver:      yupResolver(ProfileFormSchema),
@@ -34,27 +34,24 @@ export const Profile = () => {
         },
     });
 
-    const submitForm = handleSubmit(async (profileInfo) => {
-        const { data: updatedUser } = await updateProfile.mutateAsync(profileInfo, {
-            onError: (error) => {
-                const { response: { data: { statusCode, message } } } = error;
-                setError('root.serverError', {
-                    type: statusCode,
-                    message,
-                });
-            },
-        });
-        reset();
-        setCurrentUser(updatedUser);
-    });
-
-    useEffect(() => {
-        if (currentUser?.name) {
-            const [firstName, lastName] = currentUser.name.split(' ');
+    const fillForm = () => {
+        if (userName) {
+            const [
+                firstName,
+                lastName,
+            ] = `${userName}`.split(' ');
             setValue('firstName', firstName);
             setValue('lastName', lastName);
         }
-    }, [currentUser]);
+    };
+    const submitForm = handleSubmit(async (profileInfo) => {
+        await updateProfile.mutateAsync(profileInfo);
+        reset();
+    });
+
+    useEffect(() => {
+        fillForm();
+    }, [userName]);
 
     return (
         <form
@@ -62,7 +59,7 @@ export const Profile = () => {
             className = 'form'>
             <div className = 'wrapper'>
                 <div>
-                    <h1>Привіт, { currentUser?.name }</h1>
+                    <h1>Привіт, { userName }</h1>
                     <UiAvatar src = { currentUser?.avatar } alt = 'User avatar' />
                     <UiInput
                         placeholder = "Ім'я"
@@ -75,10 +72,6 @@ export const Profile = () => {
                         autoComplete = 'lastName'
                         error = { formState.errors.lastName }
                         register = { register('lastName') } />
-                    {
-                        formState.errors.root?.serverError
-                        && <div className = 'server-error'><p>{ formState.errors.root?.serverError.message }</p></div>
-                    }
                     <button className = 'loginSubmit' type = 'submit'>
                         Оновити профіль
                     </button>
@@ -90,4 +83,4 @@ export const Profile = () => {
             </div>
         </form>
     );
-};
+});
