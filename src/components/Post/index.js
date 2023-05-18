@@ -1,5 +1,5 @@
 // Core
-import { observer } from 'mobx-react-lite';
+import { useSelector, useDispatch } from 'react-redux';
 
 // Components
 import Moment from 'react-moment';
@@ -9,21 +9,17 @@ import { CommentsForm } from '../forms/CommentsForm';
 import { Comment } from '../Comment';
 import { UiAvatar } from '../Ui/UiAvatar';
 
-// Hoots
-import { useStore } from '../../hooks/useStore';
+// Store
+import { getActivePostId, setActivePostId } from '../../store/feedSlice';
 
-export const Post = observer(({ post }) => {
-    const {
-        feedStore: {
-            activePostId,
-            setActivePostId,
-        },
-    } = useStore();
+export const Post = ({ post }) => {
+    const activePostId = useSelector(getActivePostId);
+    const dispatch = useDispatch();
     const isCommentsVisible = activePostId === post.hash;
 
     function handlerOnCommentsIconClick() {
         const newActivePostId = isCommentsVisible ? null : post.hash;
-        setActivePostId(newActivePostId);
+        dispatch(setActivePostId(newActivePostId));
     }
 
     return (
@@ -66,4 +62,4 @@ export const Post = observer(({ post }) => {
             }
         </section>
     );
-});
+};

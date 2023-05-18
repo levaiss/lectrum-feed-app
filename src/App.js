@@ -1,6 +1,6 @@
 // Core
 import { Routes, Route } from 'react-router-dom';
-import { observer } from 'mobx-react-lite';
+import { useDispatch, useSelector } from 'react-redux';
 
 // Components
 import { toast, ToastContainer, Slide } from 'react-toastify';
@@ -17,19 +17,20 @@ import { Footer } from './components/Footer';
 import { PrivateRoute } from './components/PrivateRoute';
 import { PublicRoute } from './components/PublicRoute';
 
-// Hooks
-import { useStore } from './hooks/useStore';
+// Store
+import { getErrorMessage, setErrorMessage } from './store/uiSlice';
 
 // Instrument
 import { toastOptions } from './constants/toastOptions';
 
-export const App = observer(() => {
-    const { uiStore: { errorMessage, setErrorMessage } } = useStore();
+export const App = () => {
+    const errorMessage = useSelector(getErrorMessage);
+    const dispatch = useDispatch();
 
     useEffect(() => {
         if (errorMessage) {
             toast.error(errorMessage, toastOptions);
-            setErrorMessage(null);
+            dispatch(setErrorMessage(null));
         }
     }, [errorMessage]);
 
@@ -58,4 +59,4 @@ export const App = observer(() => {
             <Footer />
         </>
     );
-});
+};

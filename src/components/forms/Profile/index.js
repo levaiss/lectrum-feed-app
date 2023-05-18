@@ -1,23 +1,26 @@
 // Core
 import { useEffect } from 'react';
+import { useSelector } from 'react-redux';
 import { NavLink } from 'react-router-dom';
 import { useForm } from 'react-hook-form';
 import { yupResolver } from '@hookform/resolvers/yup';
-import { observer } from 'mobx-react-lite';
 
 // Components
 import { UiInput } from '../../Ui/UiInput';
 import { UiAvatar } from '../../Ui/UiAvatar';
 
 // Hooks
+import { getUser, getUserName } from '../../../store/userSlice';
+
+// Hooks
 import { useUpdateProfile } from '../../../hooks/useUpdateProfile';
-import { useStore } from '../../../hooks/useStore';
 
 // Instruments
 import { ProfileFormSchema } from './config';
 
-export const Profile = observer(() => {
-    const { userStore: { user: currentUser, userName } } = useStore();
+export const Profile = () => {
+    const currentUser = useSelector(getUser);
+    const userName = useSelector(getUserName);
     const updateProfile = useUpdateProfile();
     const {
         handleSubmit,
@@ -83,4 +86,4 @@ export const Profile = observer(() => {
             </div>
         </form>
     );
-});
+};

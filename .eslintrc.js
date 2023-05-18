@@ -245,7 +245,6 @@ module.exports = {
         'no-new-wrappers':       'error',
         'no-octal':              'error',
         'no-octal-escape':       'error',
-        'no-param-reassign':     'error',
         'no-proto':              'error',
         'no-redeclare':          [
             'error',
@@ -514,5 +513,11 @@ module.exports = {
             },
         ],
         'import/no-extraneous-dependencies': 0,
+        'no-param-reassign':                 [
+            'error', {
+                props:                          true,
+                ignorePropertyModificationsFor: ['state'],
+            },
+        ],
     },
 };

@@ -1,14 +1,14 @@
 // Core
-import { observer } from 'mobx-react-lite';
+import { useSelector } from 'react-redux';
 
 // Components
 import { UiAvatar } from '../../Ui/UiAvatar';
 
 // Hooks
-import { useStore } from '../../../hooks/useStore';
+import { getUser } from '../../../store/userSlice';
 
-export const Composer = observer(() => {
-    const { userStore: { user: currentUser } } = useStore();
+export const Composer = () => {
+    const currentUser = useSelector(getUser);
 
     return (
         <section className = 'composer'>
@@ -21,4 +21,4 @@ export const Composer = observer(() => {
             </form>
         </section>
     );
-});
+};

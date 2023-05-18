@@ -2,8 +2,6 @@
 import { useNavigate, NavLink } from 'react-router-dom';
 import { useForm } from 'react-hook-form';
 import { yupResolver } from '@hookform/resolvers/yup';
-import { observer } from 'mobx-react-lite';
-
 
 // Components
 import { UiInput } from '../../Ui/UiInput';
@@ -14,7 +12,7 @@ import { useSignUp } from '../../../hooks/useSignUp';
 // Instruments
 import { SignUpFormSchema } from './config';
 
-export const SignUp = observer(() => {
+export const SignUp = () => {
     const signUp = useSignUp();
     const navigate = useNavigate();
     const {
@@ -85,4 +83,4 @@ export const SignUp = observer(() => {
             </div>
         </form>
     );
-});
+};

@@ -1,16 +1,15 @@
 // Core
+import { useDispatch } from 'react-redux';
 import { useQuery } from '@tanstack/react-query';
 
-// Hooks
-import { useStore } from './useStore';
+// Store
+import { setErrorMessage } from '../store/uiSlice';
 
 // Instruments
 import { api } from '../api';
 
 export function useRecentComments() {
-    const {
-        uiStore: { setErrorMessage },
-    } = useStore();
+    const dispatch = useDispatch();
 
     return useQuery({
         queryKey: ['recentComments'],
@@ -21,7 +20,7 @@ export function useRecentComments() {
         },
         onError: (error) => {
             const message = error?.response?.data?.message || error?.message;
-            setErrorMessage(message);
+            dispatch(setErrorMessage(message));
         },
     });
 }

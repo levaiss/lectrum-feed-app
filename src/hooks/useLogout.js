@@ -1,23 +1,21 @@
 // Core
 import { useEffect } from 'react';
 import { useDispatch } from 'react-redux';
-import { useQueryClient, useMutation } from '@tanstack/react-query';
+import { useMutation } from '@tanstack/react-query';
 
 // Store
-import {
-    setToken,
-} from '../store/authSlice';
+import { setUser } from '../store/userSlice';
+import { setToken } from '../store/authSlice';
 import { setErrorMessage } from '../store/uiSlice';
 
 // Instruments
 import { api } from '../api';
 
-export function useLogin() {
+export function useLogout() {
     const dispatch = useDispatch();
-    const queryClient = useQueryClient();
     const mutation = useMutation({
-        mutationFn: (credentials) => {
-            return api.auth.login(credentials);
+        mutationFn: () => {
+            return api.auth.logout();
         },
         onError: (error) => {
             const message = error?.response?.data?.message || error?.message;
@@ -26,12 +24,10 @@ export function useLogin() {
     });
 
     useEffect(() => {
-        const token = mutation.data?.data;
-
-        if (mutation.isSuccess && token) {
-            api.setToken(token);
-            dispatch(setToken(token));
-            queryClient.invalidateQueries({ queryKey: ['profile'] });
+        if (mutation.isSuccess) {
+            api.removeToken();
+            dispatch(setToken(null));
+            dispatch(setUser(null));
         }
     }, [mutation.isSuccess]);
 

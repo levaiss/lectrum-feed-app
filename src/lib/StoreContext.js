@@ -1,14 +1,13 @@
-import { createContext } from 'react';
-import { RootStore } from './mobx';
+// Core
+import { Provider } from 'react-redux';
 
-const rootStore = new RootStore();
-
-export const StoreContext = createContext(rootStore);
+// Root store
+import Store from '../store';
 
 export const StoreProvider = ({ children }) => {
     return (
-        <StoreContext.Provider value = { rootStore }>
+        <Provider store = { Store }>
             { children }
-        </StoreContext.Provider>
+        </Provider>
     );
 };

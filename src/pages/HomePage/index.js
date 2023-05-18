@@ -1,20 +1,18 @@
 // Core
+import { useSelector } from 'react-redux';
 import { Navigate } from 'react-router-dom';
-import { observer } from 'mobx-react-lite';
 
-// Hooks
-import { useStore } from '../../hooks/useStore';
+// Store
+import {
+    getIsAuth,
+} from '../../store/authSlice';
 
-export const HomePage = observer(() => {
-    const {
-        authStore: {
-            isAuth,
-        },
-    } = useStore();
+export const HomePage = () => {
+    const isAuth = useSelector(getIsAuth);
 
     if (!isAuth) {
         return <Navigate to = '/login' replace />;
     }
 
     return <Navigate to = '/feed' replace />;
-});
+};

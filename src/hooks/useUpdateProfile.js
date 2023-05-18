@@ -1,17 +1,16 @@
 // Core
+import { useDispatch } from 'react-redux';
 import { useMutation } from '@tanstack/react-query';
 
-// Hooks
-import { useStore } from './useStore';
+// Store
+import { setErrorMessage } from '../store/uiSlice';
 
 // Instruments
 import { queryClient } from '../lib/queryClient';
 import { api } from '../api';
 
 export function useUpdateProfile() {
-    const {
-        uiStore: { setErrorMessage },
-    } = useStore();
+    const dispatch = useDispatch();
 
     return useMutation({
         mutationFn: (profileInfo) => {
@@ -20,7 +19,7 @@ export function useUpdateProfile() {
         onSuccess: () => queryClient.invalidateQueries({ queryKey: ['profile'] }),
         onError:   (error) => {
             const message = error?.response?.data?.message || error?.message;
-            setErrorMessage(message);
+            dispatch(setErrorMessage(message));
         },
     });
 }

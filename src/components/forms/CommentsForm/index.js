@@ -1,14 +1,14 @@
 // Core
-import { observer } from 'mobx-react-lite';
+import { useSelector } from 'react-redux';
 
 // Components
 import { UiAvatar } from '../../Ui/UiAvatar';
 
-// Hooks
-import { useStore } from '../../../hooks/useStore';
+// Store
+import { getUser } from '../../../store/userSlice';
 
-export const CommentsForm = observer(() => {
-    const { userStore: { user: currentUser } } = useStore();
+export const CommentsForm = () => {
+    const currentUser = useSelector(getUser);
 
     return (
         <form className = 'commentForm'>
@@ -27,4 +27,4 @@ export const CommentsForm = observer(() => {
             </button>
         </form>
     );
-});
+};
