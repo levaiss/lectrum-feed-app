@@ -1,24 +1,35 @@
 // Core
 import { useEffect } from 'react';
-import { NavLink } from 'react-router-dom';
-import { observer } from 'mobx-react-lite';
+import { useDispatch, useSelector } from 'react-redux';
+import { NavLink, useNavigate } from 'react-router-dom';
 
 // Components
 import { UiAvatar } from '../Ui/UiAvatar';
 
-// Instruments
-import { useProfile } from '../../hooks/useProfile';
-import { useStore } from '../../hooks/useStore';
+// Store
+import { getUser, setUser } from '../../store/userSlice';
 
-export const Navigation = observer(() => {
+// Hooks
+import { useProfile } from '../../hooks/useProfile';
+import { useLogout } from '../../hooks/useLogout';
+
+export const Navigation = () => {
+    const currentUser = useSelector(getUser);
     const {
         data: userData,
     } = useProfile();
-    const { userStore: { user: currentUser, setUser } } = useStore();
+    const navigate = useNavigate();
+    const logout = useLogout();
+    const dispatch = useDispatch();
+
+    const handlerOnLogout = async () => {
+        await logout.mutateAsync();
+        navigate('/');
+    };
 
     useEffect(() => {
         if (userData) {
-            setUser(userData);
+            dispatch(setUser(userData));
         }
     }, [userData]);
 
@@ -50,7 +61,9 @@ export const Navigation = observer(() => {
                 className = { getNavLinkClasses }>
                 Стіна
             </NavLink>
-            <button className = 'logout'>Вийти</button>
+            <button
+                onClick = { handlerOnLogout }
+                className = 'logout'>Вийти</button>
         </div>
     );
-});
+};

@@ -1,36 +1,33 @@
 // Core
 import { useEffect } from 'react';
+import { useSelector, useDispatch } from 'react-redux';
 import { Navigate, Outlet } from 'react-router-dom';
-import { observer } from 'mobx-react-lite';
 
-// Hooks
-import { useStore } from '../hooks/useStore';
+// Store
+import {
+    getIsAuth, getTokenCheckStatus, setToken, setTokenCheckStatus,
+} from '../store/authSlice';
 
 // Instruments
 import { api } from '../api';
 import { FETCH_STATUS } from '../constants/fetch-status';
 
 export const PublicRoute
-    = observer(({
+    = ({
         children,
         restricted,
         redirectPath = '/',
     }) => {
-        const {
-            authStore: {
-                isAuth,
-                tokenCheckStatus,
-                setTokenCheckStatus,
-                setToken,
-            },
-        } = useStore();
+        const isAuth = useSelector(getIsAuth);
+        const tokenCheckStatus = useSelector(getTokenCheckStatus);
+        const dispatch = useDispatch();
 
         useEffect(() => {
             // TODO: Need refactoring
 
             const { token } = api;
             if (!token) {
-                setTokenCheckStatus(FETCH_STATUS.success);
+                dispatch(setTokenCheckStatus(FETCH_STATUS.success));
 
                 return;
             }
@@ -42,11 +39,11 @@ export const PublicRoute
                     }
 
                     await api.auth.auth();
-                    setToken(api.token);
+                    dispatch(setToken(api.token));
                 } catch (error) {
                     api.removeToken();
                 } finally {
-                    setTokenCheckStatus(FETCH_STATUS.success);
+                    dispatch(setTokenCheckStatus(FETCH_STATUS.success));
                 }
             })();
         }, []);
@@ -60,4 +57,4 @@ export const PublicRoute
         }
 
         return children || <Outlet />;
-    });
+    };

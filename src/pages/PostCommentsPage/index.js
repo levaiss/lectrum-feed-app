@@ -1,6 +1,5 @@
 // Core
 import { useParams } from 'react-router-dom';
-import { observer } from 'mobx-react-lite';
 
 // Components
 import { PostComments } from '../../components/PostComments';
@@ -8,7 +7,7 @@ import { PostComments } from '../../components/PostComments';
 // Hooks
 import { usePostDetails } from '../../hooks/usePostDetails';
 
-export const PostCommentsPage = observer(() => {
+export const PostCommentsPage = () => {
     const { postId } = useParams();
     const {
         status: postStatus,
@@ -20,4 +19,4 @@ export const PostCommentsPage = observer(() => {
             status = { postStatus }
             post = { postData } />
     );
-});
+};

@@ -43,8 +43,7 @@ export const api = {
             });
         },
         logout() {
-            return fetch(`${AUTH_URL}/logout`, {
-                method:  'GET',
+            return axios.get(`${AUTH_URL}/logout`, {
                 headers: {
                     Authorization: `Bearer ${api.token}`,
                 },

@@ -1,17 +1,16 @@
 // Core
+import { useDispatch } from 'react-redux';
 import { useQuery } from '@tanstack/react-query';
 
-// Hooks
-import { useStore } from './useStore';
+// Store
+import { setErrorMessage } from '../store/uiSlice';
 
 // Instruments
 import { api } from '../api';
 
 
 export function useProfile() {
-    const {
-        uiStore: { setErrorMessage },
-    } = useStore();
+    const dispatch = useDispatch();
 
     return useQuery({
         queryKey: ['profile'],
@@ -22,7 +21,7 @@ export function useProfile() {
         },
         onError: (error) => {
             const message = error?.response?.data?.message || error?.message;
-            setErrorMessage(message);
+            dispatch(setErrorMessage(message));
         },
     });
 }
