@@ -1,11 +1,16 @@
 // Core
+import { useEffect } from 'react';
 import { Routes, Route } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
 
 // Components
 import { toast, ToastContainer, Slide } from 'react-toastify';
-import { useEffect } from 'react';
 import { DefaultLayout } from './layouts/DefaultLayout';
+import { PrivateRoute } from './components/PrivateRoute';
+import { PublicRoute } from './components/PublicRoute';
+import { Footer } from './components/Footer';
+
+// Pages
 import { HomePage } from './pages/HomePage';
 import { LoginPage } from './pages/LoginPage';
 import { SignUpPage } from './pages/SignUpPage';
@@ -13,9 +18,7 @@ import { Feed } from './pages/Feed';
 import { PostCommentsPage } from './pages/PostCommentsPage';
 import { ProfilePage } from './pages/ProfilePage';
 import { NoMatch } from './pages/NoMatch';
-import { Footer } from './components/Footer';
-import { PrivateRoute } from './components/PrivateRoute';
-import { PublicRoute } from './components/PublicRoute';
+import { NewPasswordPage } from './pages/NewPasswordPage';
 
 // Store
 import { getErrorMessage, setErrorMessage } from './store/uiSlice';
@@ -53,6 +56,7 @@ export const App = () => {
                     <Route path = '/feed' element = { <Feed /> } />
                     <Route path = '/feed/:postId' element = { <PostCommentsPage /> } />
                     <Route path = '/profile' element = { <ProfilePage /> } />
+                    <Route path = '/profile/new-password' element = { <NewPasswordPage /> } />
                 </Route>
                 <Route path = '*' element = { <NoMatch /> } />
             </Routes>
