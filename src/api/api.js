@@ -139,14 +139,14 @@ export const api = {
 
             return data;
         },
-        updateAvatar(avatarFormData) {
-            return fetch(`${AUTH_URL}/image`, {
-                method:  'POST',
+        async resetPassword(body) {
+            const { data } = await axios.post(`${AUTH_URL}/reset-password`, body, {
                 headers: {
-                    Authorization: this.token,
+                    Authorization: `Bearer ${api.token}`,
                 },
-                body: avatarFormData,
             });
+
+            return data;
         },
     },
     users: {
