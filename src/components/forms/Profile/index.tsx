@@ -1,9 +1,12 @@
-// Core
-import { useEffect } from 'react'
+/* Core */
+import { type FC, useEffect } from 'react'
 import { useSelector } from 'react-redux'
 import { NavLink } from 'react-router-dom'
 import { useForm } from 'react-hook-form'
 import { yupResolver } from '@hookform/resolvers/yup'
+import { type UseMutationResult } from '@tanstack/react-query'
+import { type UserModel } from '../../../types/UserModel'
+import { type updateProfileRequestData } from '../../../types/Api'
 
 // Components
 import { UiInput } from '../../Ui/UiInput'
@@ -18,10 +21,10 @@ import { useUpdateProfile } from '../../../hooks/useUpdateProfile'
 // Instruments
 import { ProfileFormSchema } from './config'
 
-export const Profile = () => {
-  const currentUser = useSelector(getUser)
-  const userName = useSelector(getUserName)
-  const updateProfile = useUpdateProfile()
+export const Profile: FC = () => {
+  const currentUser: UserModel | null = useSelector(getUser)
+  const userName: string = useSelector(getUserName)
+  const updateProfile: UseMutationResult<any, any, updateProfileRequestData> = useUpdateProfile()
   const {
     handleSubmit,
     formState,
@@ -37,7 +40,7 @@ export const Profile = () => {
     }
   })
 
-  const fillForm = () => {
+  const fillForm = (): void => {
     if (userName) {
       const [
         firstName,
@@ -67,12 +70,14 @@ export const Profile = () => {
                     <UiInput
                         placeholder = "Ім'я"
                         autoComplete = 'firstName'
+                        name = 'firstName'
                         autoFocus
                         error = { formState.errors.firstName }
                         register = { register('firstName') } />
                     <UiInput
                         placeholder = 'Призвіще'
                         autoComplete = 'lastName'
+                        name = 'lastName'
                         error = { formState.errors.lastName }
                         register = { register('lastName') } />
                     <button className = 'loginSubmit' type = 'submit'>

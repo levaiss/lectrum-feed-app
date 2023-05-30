@@ -10,12 +10,13 @@ import { setErrorMessage } from '../store/uiSlice'
 import { queryClient } from '../lib/queryClient'
 import { api } from '../api'
 import { isAxiosError } from '../utils/helpers'
+import { type updateProfileRequestData } from '../types/Api'
 
-export function useUpdateProfile (): UseMutationResult {
+export function useUpdateProfile (): UseMutationResult<any, any, updateProfileRequestData> {
   const dispatch: Dispatch = useDispatch()
 
   return useMutation({
-    mutationFn: (profileInfo) => {
+    mutationFn: (profileInfo: updateProfileRequestData) => {
       return api.profile.updateProfile(profileInfo)
     },
     onSuccess: async () => { await queryClient.invalidateQueries({ queryKey: ['profile'] }) },

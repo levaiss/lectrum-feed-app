@@ -1,6 +1,8 @@
 // Core
 import { createSlice, createAsyncThunk } from '@reduxjs/toolkit'
 import { type RootState } from './index'
+import { type Token } from '../types/common'
+import { type newPasswordRequestData } from '../types/Api'
 
 // Store
 import { setErrorMessage } from './uiSlice'
@@ -44,9 +46,9 @@ export const getTokenCheckStatus = (state: RootState): FetchStatusesType => stat
 
 export const { setToken, setTokenCheckStatus } = authSlice.actions
 
-export const resetPassword = createAsyncThunk(
+export const resetPassword = createAsyncThunk<Token, newPasswordRequestData, any>(
   'auth/resetPassword',
-  async (body, thunkAPI) => {
+  async (body: newPasswordRequestData, thunkAPI) => {
     try {
       const { data: newToken } = await api.profile.resetPassword(body)
       api.setToken(newToken)

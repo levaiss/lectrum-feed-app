@@ -8,7 +8,7 @@ import { RecentComment } from '../RecentComment'
 
 interface RecentCommentsProps {
   status: string
-  comments: CommentModel[]
+  comments?: CommentModel[]
 }
 
 export const RecentComments: FC<RecentCommentsProps> = ({ status, comments }) => {

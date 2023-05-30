@@ -1,6 +1,6 @@
 /* Core */
 import { type FC } from 'react'
-import { useNavigate, NavLink } from 'react-router-dom'
+import { useNavigate, NavLink, type NavigateFunction } from 'react-router-dom'
 import { useForm } from 'react-hook-form'
 import { yupResolver } from '@hookform/resolvers/yup'
 
@@ -15,7 +15,7 @@ import { SignUpFormSchema } from './config'
 
 export const SignUp: FC = () => {
   const signUp = useSignUp()
-  const navigate = useNavigate()
+  const navigate: NavigateFunction = useNavigate()
   const {
     handleSubmit,
     formState,
@@ -45,7 +45,7 @@ export const SignUp: FC = () => {
 
   return (
         <form
-            onSubmit = { () => { void submitForm } }
+            onSubmit = { submitForm }
             className = 'form centered'>
             <div className = 'wrapper centered'>
                 <div className = 'logo'></div>

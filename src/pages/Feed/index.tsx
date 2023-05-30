@@ -1,3 +1,6 @@
+/* Core */
+import { type FC } from 'react'
+
 // Components
 import { Posts } from '../../components/Posts'
 import { RecentComments } from '../../components/RecentComments'
@@ -7,7 +10,7 @@ import { Composer } from '../../components/forms/Composer'
 import { usePosts } from '../../hooks/usePosts'
 import { useRecentComments } from '../../hooks/useRecentComments'
 
-export const Feed = () => {
+export const Feed: FC = () => {
   const {
     status: postsFetchStatus,
     data: postsData

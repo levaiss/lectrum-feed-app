@@ -9,13 +9,14 @@ import { setErrorMessage } from '../store/uiSlice'
 // Instruments
 import { api } from '../api'
 import { isAxiosError } from '../utils/helpers'
+import { type CommentModel } from '../types/CommentModel'
 
-export function useRecentComments (): UseQueryResult {
+export function useRecentComments (): UseQueryResult<CommentModel[]> {
   const dispatch: Dispatch = useDispatch()
 
   return useQuery({
     queryKey: ['recentComments'],
-    queryFn: async () => {
+    queryFn: async (): Promise<CommentModel[]> => {
       const { data } = await api.posts.getComments()
 
       return data

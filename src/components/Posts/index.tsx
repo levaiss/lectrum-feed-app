@@ -8,7 +8,7 @@ import { Post } from '../Post'
 
 interface PostsProps {
   status: string
-  posts: PostModel[]
+  posts?: PostModel[]
 }
 
 export const Posts: FC<PostsProps> = ({ status, posts }) => {

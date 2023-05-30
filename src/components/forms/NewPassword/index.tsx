@@ -1,7 +1,8 @@
 // Core
 import { type FC } from 'react'
 import { useDispatch } from 'react-redux'
-import { NavLink, useNavigate } from 'react-router-dom'
+import { type Dispatch } from 'redux'
+import { type NavigateFunction, NavLink, useNavigate } from 'react-router-dom'
 import { useForm } from 'react-hook-form'
 import { yupResolver } from '@hookform/resolvers/yup'
 
@@ -12,11 +13,12 @@ import { UiInput } from '../../Ui/UiInput'
 import { resetPassword } from '../../../store/authSlice'
 
 // Instruments
+import { type newPasswordRequestData } from '../../../types/Api'
 import { NewPasswordFormSchema } from './config'
 
 export const NewPassword: FC = () => {
-  const navigate = useNavigate()
-  const dispatch = useDispatch()
+  const navigate: NavigateFunction = useNavigate()
+  const dispatch: Dispatch = useDispatch()
   const {
     handleSubmit,
     formState,
@@ -31,17 +33,19 @@ export const NewPassword: FC = () => {
     }
   })
 
-  const submitForm = handleSubmit(async (body): Promise<void> => {
-    const { payload } = await dispatch(resetPassword(body))
-    if (payload) {
-      reset()
-      navigate('/feed')
-    }
+  const submitForm = handleSubmit(async (body: newPasswordRequestData): Promise<void> => {
+    // @ts-expect-error
+    dispatch(resetPassword(body)).then(({ payload }) => {
+      if (payload) {
+        reset()
+        navigate('/feed')
+      }
+    })
   })
 
   return (
         <form
-            onSubmit = { () => { void submitForm() } }
+            onSubmit = { submitForm }
             className = 'form'>
             <div className = 'wrapper'>
                 <div>

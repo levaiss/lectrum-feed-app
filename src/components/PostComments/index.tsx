@@ -9,7 +9,7 @@ import { LoadingOverlay } from '../LoadingOverlay'
 
 interface PostCommentsProps {
   status: string
-  post: PostModel
+  post?: PostModel
 }
 
 export const PostComments: FC<PostCommentsProps> = ({ status, post }) => {
@@ -25,33 +25,35 @@ export const PostComments: FC<PostCommentsProps> = ({ status, post }) => {
                 Коментарі до поста
             </h1>
             <LoadingOverlay status = { status }>
-                { post && <section>
-                    <div className = 'comment'>
-                        <p className = 'name'>{ post?.author.name }</p>
-                        <Moment
-                            date = { post.created }
-                            fromNow />
-                        <p className = 'body'>
-                            { post.body }
-                        </p>
-                        <p className = 'subtitle'>
-                            Популярні коментарі
-                        </p>
-                        <>
-                            {
-                                Array.isArray(post.comments) && post.comments.map(
-                                  (comment) => <div key = { comment.hash } className = 'comment'>
-                                        <p>{ comment?.author.name }</p>
-                                        <Moment
-                                            date = { comment.created }
-                                            fromNow />
-                                        <p>{ comment.body }</p>
-                                    </div>
-                                )
-                            }
-                        </>
-                    </div>
-                </section> }
+                <>
+                    { post && <section>
+                        <div className = 'comment'>
+                            <p className = 'name'>{ post?.author.name }</p>
+                            <Moment
+                                date = { post.created }
+                                fromNow />
+                            <p className = 'body'>
+                                { post.body }
+                            </p>
+                            <p className = 'subtitle'>
+                                Популярні коментарі
+                            </p>
+                            <>
+                                {
+                                    Array.isArray(post.comments) && post.comments.map(
+                                      (comment) => <div key = { comment.hash } className = 'comment'>
+                                            <p>{ comment?.author.name }</p>
+                                            <Moment
+                                                date = { comment.created }
+                                                fromNow />
+                                            <p>{ comment.body }</p>
+                                        </div>
+                                    )
+                                }
+                            </>
+                        </div>
+                    </section> }
+                </>
             </LoadingOverlay>
         </div>
   )

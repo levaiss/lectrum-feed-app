@@ -1,6 +1,6 @@
 // Core
 import { type FC } from 'react'
-import { useParams } from 'react-router-dom'
+import { useParams, Navigate } from 'react-router-dom'
 
 // Components
 import { PostComments } from '../../components/PostComments'
@@ -10,6 +10,10 @@ import { usePostDetails } from '../../hooks/usePostDetails'
 
 export const PostCommentsPage: FC = () => {
   const { postId } = useParams()
+  if (!postId) {
+    return <Navigate to='/feed'/>
+  }
+
   const {
     status: postStatus,
     data: postData

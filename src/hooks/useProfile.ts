@@ -9,13 +9,14 @@ import { setErrorMessage } from '../store/uiSlice'
 // Instruments
 import { api } from '../api'
 import { isAxiosError } from '../utils/helpers'
+import { type UserModel } from '../types/UserModel'
 
-export function useProfile (): UseQueryResult {
+export function useProfile (): UseQueryResult<UserModel> {
   const dispatch: Dispatch = useDispatch()
 
   return useQuery({
     queryKey: ['profile'],
-    queryFn: async () => {
+    queryFn: async (): Promise<UserModel> => {
       const { data } = await api.profile.fetch()
 
       return data
