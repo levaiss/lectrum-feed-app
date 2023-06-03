@@ -22,11 +22,11 @@ import { StoreProvider } from './lib/StoreContext'
 createRoot(document.getElementById('root') as Element)
   .render(
         <BrowserRouter>
-            <QueryClientProvider client = { queryClient }>
-                <StoreProvider>
+            <StoreProvider>
+                <QueryClientProvider client = { queryClient }>
                     <App />
-                </StoreProvider>
-                <ReactQueryDevtools initialIsOpen />
-            </QueryClientProvider>
+                    <ReactQueryDevtools initialIsOpen />
+                </QueryClientProvider>
+            </StoreProvider>
         </BrowserRouter>
   )

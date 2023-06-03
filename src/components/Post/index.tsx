@@ -1,7 +1,9 @@
 // Core
 import { type FC } from 'react'
 import { useSelector, useDispatch } from 'react-redux'
+import { type Dispatch } from 'redux'
 import { type PostModel } from '../../types/PostModel'
+import { type CommentModel } from '../../types/CommentModel'
 
 // Components
 import Moment from 'react-moment'
@@ -19,12 +21,12 @@ interface PostProps {
 }
 
 export const Post: FC<PostProps> = ({ post }) => {
-  const activePostId = useSelector(getActivePostId)
-  const dispatch = useDispatch()
-  const isCommentsVisible = activePostId === post.hash
+  const activePostId: string | null = useSelector(getActivePostId)
+  const dispatch: Dispatch = useDispatch()
+  const isCommentsVisible: boolean = activePostId === post.hash
 
   function handlerOnCommentsIconClick (): void {
-    const newActivePostId = isCommentsVisible ? null : post.hash
+    const newActivePostId: string | null = isCommentsVisible ? null : post.hash
     dispatch(setActivePostId(newActivePostId))
   }
 
@@ -58,7 +60,7 @@ export const Post: FC<PostProps> = ({ post }) => {
                     <ul>
                         {
                             Array.isArray(post.comments) && post.comments.map(
-                              (comment) => <Comment
+                              (comment: CommentModel) => <Comment
                                     key = { comment.hash }
                                     comment = { comment } />
                             )

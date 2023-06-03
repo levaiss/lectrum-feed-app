@@ -1,4 +1,6 @@
-export const toastOptions = Object.freeze({
+import { type ToastOptions } from 'react-toastify'
+
+export const toastOptions: ToastOptions = Object.freeze({
   position: 'top-right',
   autoClose: 5000,
   hideProgressBar: false,

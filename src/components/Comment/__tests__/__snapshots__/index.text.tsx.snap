@@ -1,0 +1,3 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`Comment component Comment structure should be received from props value 1`] = `"<li class=\\"commentBody\\"><p>John Dou<span dateTime=\\"1615772222\\">53 years ago</span></p><p>Test comment from John Dou</p></li>"`;
