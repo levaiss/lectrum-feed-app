@@ -11,7 +11,7 @@ import { useUpdateProfile } from '../useUpdateProfile'
 import { ROOT_URL } from '../../api/config'
 
 // Helpers
-import { wrapper } from '../../tests/helpers'
+import { Wrapper } from '../../tests/helpers'
 
 axios.defaults.adapter = require('axios/lib/adapters/http')
 
@@ -20,7 +20,7 @@ describe('useUpdateProfile', () => {
     const {
       result,
       waitFor
-    } = renderHook(() => useUpdateProfile(), { wrapper })
+    } = renderHook(() => useUpdateProfile(), { wrapper: Wrapper })
     const updateProfileInterceptor = nock(ROOT_URL)
       .put('/live/profile')
       .reply(200, {}, { 'Access-Control-Allow-Origin': '*' })

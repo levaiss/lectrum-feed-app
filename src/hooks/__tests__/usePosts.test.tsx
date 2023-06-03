@@ -10,7 +10,7 @@ import { usePosts } from '../usePosts'
 import { ROOT_URL } from '../../api/config'
 
 // Helpers
-import { wrapper } from '../../tests/helpers'
+import { Wrapper } from '../../tests/helpers'
 import { posts } from '../../tests/fake-data'
 
 axios.defaults.adapter = require('axios/lib/adapters/http')
@@ -24,7 +24,7 @@ describe('usePosts', () => {
     const {
       result,
       waitFor
-    } = renderHook(() => usePosts(), { wrapper })
+    } = renderHook(() => usePosts(), { wrapper: Wrapper })
 
     await waitFor(() => {
       return result.current.isSuccess
