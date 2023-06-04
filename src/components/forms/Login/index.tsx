@@ -30,41 +30,44 @@ export const Login: FC = () => {
     }
   })
 
-  const submitForm = handleSubmit(async (credentials): Promise<void> => {
-    await login.mutateAsync(credentials)
-    reset()
-    navigate('/feed')
+  const submitForm = handleSubmit((credentials) => {
+    void login.mutateAsync(credentials, {
+      onSuccess: () => {
+        reset()
+        navigate('/feed')
+      }
+    })
   })
 
   return (
         <form
-            onSubmit = { submitForm }
-            className = 'form centered'>
-            <div className = 'wrapper centered'>
-                <div className = 'logo'></div>
+            onSubmit={submitForm}
+            className='form centered'>
+            <div className='wrapper centered'>
+                <div className='logo'></div>
                 <div>
                     <UiInput
-                        placeholder = 'Пошта'
-                        autoComplete = 'email'
-                        type = 'email'
-                        name = 'email'
+                        placeholder='Пошта'
+                        autoComplete='email'
+                        type='email'
+                        name='email'
                         autoFocus
-                        error = { formState.errors.email }
-                        register = { register('email') } />
+                        error={formState.errors.email}
+                        register={register('email')}/>
                     <UiInput
-                        placeholder = 'Пароль'
-                        type = 'password'
-                        name = 'password'
-                        error = { formState.errors.password }
-                        register = { register('password') } />
+                        placeholder='Пароль'
+                        type='password'
+                        name='password'
+                        error={formState.errors.password}
+                        register={register('password')}/>
                     <button
-                        type = 'submit'
-                        className = 'loginSubmit'>
+                        type='submit'
+                        className='loginSubmit'>
                         Увійти
                     </button>
                 </div>
-                <p className = 'options'>
-                    Немає облікового запису? <NavLink to = '/signup'>Створити</NavLink>
+                <p className='options'>
+                    Немає облікового запису? <NavLink to='/signup'>Створити</NavLink>
                 </p>
             </div>
         </form>

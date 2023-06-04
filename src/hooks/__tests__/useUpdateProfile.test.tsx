@@ -43,7 +43,7 @@ describe('useUpdateProfile', () => {
     const {
       result,
       waitFor
-    } = renderHook(() => useUpdateProfile(), { wrapper })
+    } = renderHook(() => useUpdateProfile(), { wrapper: Wrapper })
     const updateProfileInterceptor = nock(ROOT_URL)
       .put('/live/profile')
       .reply(400, {}, { 'Access-Control-Allow-Origin': '*' })
