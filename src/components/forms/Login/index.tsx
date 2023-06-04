@@ -31,11 +31,9 @@ export const Login: FC = () => {
   })
 
   const submitForm = handleSubmit((credentials) => {
-    void login.mutateAsync(credentials, {
-      onSuccess: () => {
-        reset()
-        navigate('/feed')
-      }
+    void login.mutateAsync(credentials).then(() => {
+      reset()
+      navigate('/feed')
     })
   })
 

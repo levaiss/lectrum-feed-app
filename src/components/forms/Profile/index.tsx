@@ -50,9 +50,10 @@ export const Profile: FC = () => {
       setValue('lastName', lastName)
     }
   }
-  const submitForm = handleSubmit(async (profileInfo) => {
-    await updateProfile.mutateAsync(profileInfo)
-    reset()
+  const submitForm = handleSubmit((profileInfo) => {
+    void updateProfile.mutateAsync(profileInfo).then(() => {
+      reset()
+    })
   })
 
   useEffect(() => {

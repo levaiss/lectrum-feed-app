@@ -32,15 +32,16 @@ export const SignUp: FC = () => {
     }
   })
 
-  const submitForm = handleSubmit(async (payload) => {
+  const submitForm = handleSubmit((payload) => {
     const {
       confirmPassword,
       ...userInfo
     } = payload
 
-    await signUp.mutateAsync(userInfo)
-    reset()
-    navigate('/feed')
+    void signUp.mutateAsync(userInfo).then(() => {
+      reset()
+      navigate('/feed')
+    })
   })
 
   return (

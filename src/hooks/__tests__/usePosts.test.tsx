@@ -1,5 +1,4 @@
 // Core
-import axios from 'axios'
 import nock from 'nock'
 import { renderHook } from '@testing-library/react-hooks'
 
@@ -12,8 +11,6 @@ import { ROOT_URL } from '../../api/config'
 // Helpers
 import { Wrapper } from '../../tests/helpers'
 import { posts } from '../../tests/fake-data'
-
-axios.defaults.adapter = require('axios/lib/adapters/http')
 
 const postsInterceptor = nock(ROOT_URL)
   .get('/feed')

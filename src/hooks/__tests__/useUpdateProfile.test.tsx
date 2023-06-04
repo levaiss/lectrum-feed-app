@@ -1,5 +1,4 @@
 // Core
-import axios from 'axios'
 import nock from 'nock'
 import { act } from '@testing-library/react'
 import { renderHook } from '@testing-library/react-hooks'
@@ -12,8 +11,6 @@ import { ROOT_URL } from '../../api/config'
 
 // Helpers
 import { Wrapper } from '../../tests/helpers'
-
-axios.defaults.adapter = require('axios/lib/adapters/http')
 
 describe('useUpdateProfile', () => {
   it('should update user info', async () => {

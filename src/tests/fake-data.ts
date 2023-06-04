@@ -1,4 +1,5 @@
 import { type PostModel } from '../types/PostModel'
+import { type CommentModel } from '../types/CommentModel'
 
 export const posts: PostModel[] = [
   {
@@ -35,3 +36,16 @@ export const posts: PostModel[] = [
     likes: []
   }
 ]
+
+export const comment: CommentModel = {
+  hash: 'testCommentHash',
+  author: {
+    name: 'John Dou',
+    avatar: 'avatar.jpg'
+  },
+  created: 1615772222,
+  body: 'Test comment from John Dou',
+  post: {
+    hash: 'testPostHash'
+  }
+}
