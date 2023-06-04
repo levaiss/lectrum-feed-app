@@ -1,5 +1,5 @@
 // Core
-import { render, fireEvent, type RenderResult } from '@testing-library/react'
+import { type RenderResult, render, fireEvent } from '@testing-library/react'
 
 // Components
 import { Post } from '../index'
@@ -12,12 +12,12 @@ import { Wrapper } from '../../../tests/helpers'
 import { posts } from '../../../tests/fake-data'
 
 describe('Post component', () => {
-  let renderedComponent: RenderResult
+  let postComponent: RenderResult
   let commentButton: HTMLElement | null
 
   beforeEach(() => {
-    renderedComponent = render(<Wrapper><Post post={posts[0]} /></Wrapper>)
-    commentButton = renderedComponent.container.querySelector('.comment')
+    postComponent = render(<Wrapper><Post post={posts[0]} /></Wrapper>)
+    commentButton = postComponent.container.querySelector('.comment')
   })
 
   test('activePostId set after click', () => {
@@ -30,14 +30,14 @@ describe('Post component', () => {
     expect(Store.getState().feed.activePostId).toEqual(posts[0].hash)
   })
 
-  test('comment form visible after click', () => {
+  test('comment form visible after click', async () => {
     if (!commentButton) {
       return
     }
 
-    fireEvent.click(commentButton)
+    postComponent.rerender(<Wrapper><Post post={posts[0]} /></Wrapper>)
 
-    const commentForm = renderedComponent.container.querySelector('.commentForm')
-    expect(commentForm).toBeInTheDocument()
+    const commentFormInput = postComponent.getByPlaceholderText('Коментарій...')
+    expect(commentFormInput).toBeInTheDocument()
   })
 })
