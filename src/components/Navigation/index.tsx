@@ -25,10 +25,10 @@ export const Navigation: FC = () => {
   const logout: UseMutationResult = useLogout()
   const dispatch: Dispatch = useDispatch()
 
-  const handlerOnLogout = async (): Promise<void> => {
-    // @ts-expect-error
-    await logout.mutateAsync()
-    navigate('/')
+  const handlerOnLogout = (): void => {
+    void logout.mutateAsync(null).then(() => {
+      navigate('/')
+    })
   }
 
   useEffect(() => {
@@ -66,7 +66,7 @@ export const Navigation: FC = () => {
                 Стіна
             </NavLink>
             <button
-                onClick = { () => { void handlerOnLogout() } }
+                onClick = { handlerOnLogout }
                 className = 'logout'>Вийти</button>
         </div>
   )
