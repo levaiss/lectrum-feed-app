@@ -3,6 +3,8 @@ import { type FC } from 'react'
 import { type CommentModel } from '../../types/CommentModel'
 
 // Components
+import { RecentCommentsStyled } from '../styled/RecentCommentsStyled'
+import { TitleStyled } from '../styled/TitleStyled'
 import { LoadingOverlay } from '../LoadingOverlay'
 import { RecentComment } from '../RecentComment'
 
@@ -13,10 +15,10 @@ interface RecentCommentsProps {
 
 export const RecentComments: FC<RecentCommentsProps> = ({ status, comments }) => {
   return (
-        <div className = 'most-recent-comments'>
-            <h1 className = 'title'>
+        <RecentCommentsStyled className = 'most-recent-comments'>
+            <TitleStyled>
               Популярні коментарі
-            </h1>
+            </TitleStyled>
             <section>
                 <LoadingOverlay status = { status }>
                     <>
@@ -30,6 +32,6 @@ export const RecentComments: FC<RecentCommentsProps> = ({ status, comments }) =>
                     </>
                 </LoadingOverlay>
             </section>
-        </div>
+        </RecentCommentsStyled>
   )
 }

@@ -9,10 +9,11 @@ import { type UserModel } from '../../../types/UserModel'
 import { type updateProfileRequestData } from '../../../types/Api'
 
 // Components
+import { FormStyled } from '../../styled/FormStyled'
 import { UiInput } from '../../Ui/UiInput'
 import { UiAvatar } from '../../Ui/UiAvatar'
 
-// Hooks
+// Store
 import { getUser, getUserName } from '../../../store/userSlice'
 
 // Hooks
@@ -61,7 +62,7 @@ export const Profile: FC = () => {
   }, [userName])
 
   return (
-        <form
+        <FormStyled
             onSubmit = { submitForm }
             className = 'form'>
             <div className = 'wrapper'>
@@ -90,6 +91,6 @@ export const Profile: FC = () => {
                     Змінити пароль →
                 </NavLink>
             </div>
-        </form>
+        </FormStyled>
   )
 }

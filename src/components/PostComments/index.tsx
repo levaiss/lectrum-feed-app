@@ -2,9 +2,13 @@
 import { type FC } from 'react'
 import { NavLink } from 'react-router-dom'
 import { type PostModel } from '../../types/PostModel'
+import { type CommentModel } from '../../types/CommentModel'
 
 // Components
 import Moment from 'react-moment'
+import { SubtitleStyled } from '../styled/SubtitleStyled'
+import { TitleStyled } from '../styled/TitleStyled'
+import { CommentStyled } from '../styled/CommentStyled'
 import { LoadingOverlay } from '../LoadingOverlay'
 
 interface PostCommentsProps {
@@ -21,38 +25,36 @@ export const PostComments: FC<PostCommentsProps> = ({ status, post }) => {
                 <div className = 'arrow' />
                 назад
             </NavLink>
-            <h1 className = 'title'>
+            <TitleStyled>
                 Коментарі до поста
-            </h1>
+            </TitleStyled>
             <LoadingOverlay status = { status }>
                 <>
-                    { post && <section>
-                        <div className = 'comment'>
-                            <p className = 'name'>{ post?.author.name }</p>
-                            <Moment
-                                date = { post.created }
-                                fromNow />
-                            <p className = 'body'>
-                                { post.body }
-                            </p>
-                            <p className = 'subtitle'>
-                                Популярні коментарі
-                            </p>
-                            <>
-                                {
-                                    Array.isArray(post.comments) && post.comments.map(
-                                      (comment) => <div key = { comment.hash } className = 'comment'>
-                                            <p>{ comment?.author.name }</p>
-                                            <Moment
-                                                date = { comment.created }
-                                                fromNow />
-                                            <p>{ comment.body }</p>
-                                        </div>
-                                    )
-                                }
-                            </>
-                        </div>
-                    </section> }
+                    { post && <CommentStyled className = 'comment'>
+                        <p className = 'name'>{ post?.author.name }</p>
+                        <Moment
+                            date = { post.created }
+                            fromNow />
+                        <p className = 'body'>
+                            { post.body }
+                        </p>
+                        <SubtitleStyled>
+                            Популярні коментарі
+                        </SubtitleStyled>
+                        <>
+                            {
+                                Array.isArray(post.comments) && post.comments.map(
+                                  (comment: CommentModel) => <CommentStyled key = { comment.hash } className = 'comment'>
+                                        <p>{ comment?.author.name }</p>
+                                        <Moment
+                                            date = { comment.created }
+                                            fromNow />
+                                        <p>{ comment.body }</p>
+                                    </CommentStyled>
+                                )
+                            }
+                        </>
+                    </CommentStyled> }
                 </>
             </LoadingOverlay>
         </div>

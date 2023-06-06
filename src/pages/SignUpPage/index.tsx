@@ -6,8 +6,6 @@ import { SignUp } from '../../components/forms/SignUp'
 
 export const SignUpPage: FC = () => {
   return (
-        <main>
-            <SignUp />
-        </main>
+      <SignUp />
   )
 }

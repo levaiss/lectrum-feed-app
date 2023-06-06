@@ -10,7 +10,7 @@ import { App } from './App'
 
 // Styles
 import 'react-toastify/dist/ReactToastify.css'
-import './theme/init.scss'
+import './theme/index.scss'
 
 // Instruments
 import 'moment-timezone'

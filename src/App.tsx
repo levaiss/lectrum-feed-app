@@ -4,6 +4,7 @@ import { Routes, Route } from 'react-router-dom'
 import { useDispatch, useSelector } from 'react-redux'
 
 // Components
+import { AppStyled } from './components/styled/AppStyled'
 import { toast, ToastContainer, Slide } from 'react-toastify'
 import { DefaultLayout } from './layouts/DefaultLayout'
 import { PrivateRoute } from './components/PrivateRoute'
@@ -33,12 +34,13 @@ export const App: FC = () => {
   useEffect(() => {
     if (errorMessage) {
       toast.error(errorMessage, toastOptions)
+
       dispatch(setErrorMessage(null))
     }
   }, [errorMessage])
 
   return (
-        <>
+        <AppStyled>
             <ToastContainer newestOnTop transition = { Slide } />
             <Routes>
                 <Route index element = { <HomePage /> } />
@@ -61,6 +63,6 @@ export const App: FC = () => {
                 <Route path = '*' element = { <NoMatch /> } />
             </Routes>
             <Footer />
-        </>
+        </AppStyled>
   )
 }

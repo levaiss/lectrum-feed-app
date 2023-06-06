@@ -7,6 +7,7 @@ import { useForm } from 'react-hook-form'
 import { yupResolver } from '@hookform/resolvers/yup'
 
 // Components
+import { FormStyled } from '../../styled/FormStyled'
 import { UiInput } from '../../Ui/UiInput'
 
 // Store
@@ -44,7 +45,7 @@ export const NewPassword: FC = () => {
   })
 
   return (
-        <form
+        <FormStyled
             onSubmit = { submitForm }
             className = 'form'>
             <div className = 'wrapper'>
@@ -72,6 +73,6 @@ export const NewPassword: FC = () => {
                     ← Назад
                 </NavLink>
             </div>
-        </form>
+        </FormStyled>
   )
 }

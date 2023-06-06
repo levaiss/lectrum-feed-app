@@ -2,6 +2,8 @@
 import { type FC } from 'react'
 
 // Components
+import { TitleStyled } from '../../components/styled/TitleStyled'
+import { PostsStyled } from '../../components/styled/PostsStyled'
 import { Posts } from '../../components/Posts'
 import { RecentComments } from '../../components/RecentComments'
 import { Composer } from '../../components/forms/Composer'
@@ -22,13 +24,13 @@ export const Feed: FC = () => {
 
   return (
         <>
-            <div className = 'posts'>
-                <h1 className = 'title'>Стіна</h1>
+            <PostsStyled>
+                <TitleStyled>Стіна</TitleStyled>
                 <Composer />
                 <Posts
                     status = { postsFetchStatus }
                     posts = { postsData } />
-            </div>
+            </PostsStyled>
             <RecentComments
                 status = { recentCommentsFetchStatus }
                 comments = { recentCommentsData } />

@@ -7,6 +7,7 @@ import { type NavigateFunction, NavLink, useNavigate } from 'react-router-dom'
 import { type UserModel } from '../../types/UserModel'
 
 // Components
+import { NavigationStyled } from '../styled/NavigationStyled'
 import { UiAvatar } from '../Ui/UiAvatar'
 
 // Store
@@ -42,7 +43,7 @@ export const Navigation: FC = () => {
   }
 
   return (
-        <div>
+        <NavigationStyled>
             <div className = 'navigation-profile'>
                 <div className = 'profile-wrapper'>
                     <UiAvatar
@@ -68,6 +69,6 @@ export const Navigation: FC = () => {
             <button
                 onClick = { handlerOnLogout }
                 className = 'logout'>Вийти</button>
-        </div>
+        </NavigationStyled>
   )
 }

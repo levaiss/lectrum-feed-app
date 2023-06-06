@@ -5,6 +5,8 @@ import { useForm } from 'react-hook-form'
 import { yupResolver } from '@hookform/resolvers/yup'
 
 // Components
+import { LogoStyled } from '../../styled/LogoStyled'
+import { FormStyled } from '../../styled/FormStyled'
 import { UiInput } from '../../Ui/UiInput'
 
 // Hooks
@@ -38,11 +40,11 @@ export const Login: FC = () => {
   })
 
   return (
-        <form
+        <FormStyled
             onSubmit={submitForm}
             className='form centered'>
             <div className='wrapper centered'>
-                <div className='logo'></div>
+                <LogoStyled/>
                 <div>
                     <UiInput
                         placeholder='Пошта'
@@ -68,6 +70,6 @@ export const Login: FC = () => {
                     Немає облікового запису? <NavLink to='/signup'>Створити</NavLink>
                 </p>
             </div>
-        </form>
+        </FormStyled>
   )
 }

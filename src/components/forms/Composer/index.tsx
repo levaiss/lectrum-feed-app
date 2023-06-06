@@ -4,6 +4,7 @@ import { useSelector } from 'react-redux'
 import { type UserModel } from '../../../types/UserModel'
 
 // Components
+import { ComposerStyled } from '../../styled/ComposerStyled'
 import { UiAvatar } from '../../Ui/UiAvatar'
 
 // Hooks
@@ -14,7 +15,7 @@ export const Composer: FC = () => {
   const currentUserName: string = useSelector(getUserName)
 
   return (
-        <section className = 'composer'>
+        <ComposerStyled>
             <UiAvatar src = { currentUser?.avatar } alt = 'User avatar' />
             <form>
                 <textarea placeholder = { `What's on your mind, ${currentUserName}?` } name = 'body'></textarea>
@@ -22,6 +23,6 @@ export const Composer: FC = () => {
                   Запостити
                 </button>
             </form>
-        </section>
+        </ComposerStyled>
   )
 }

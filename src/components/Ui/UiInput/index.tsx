@@ -1,4 +1,8 @@
+// Core
 import { type FC } from 'react'
+
+// Components
+import { InputStyled } from '../../styled/InputStyled'
 
 interface UiInputProps {
   type?: string
@@ -15,7 +19,7 @@ export const UiInput: FC<UiInputProps> = ({
   type = 'text', label, name, placeholder, autoFocus, autoComplete, register, error
 }) => {
   return (
-        <label className = 'ui-input'>
+        <InputStyled as='label'>
             <div>{ label }</div>
             <input
                 name = { name }
@@ -23,7 +27,7 @@ export const UiInput: FC<UiInputProps> = ({
                 placeholder = { placeholder }
                 { ...{ autoFocus, autoComplete } }
                 { ...register } />
-            { error && <span className = 'ui-input__error-message'>{ error.message }</span> }
-        </label>
+            { error && <span className = 'error-message'>{ error.message }</span> }
+        </InputStyled>
   )
 }

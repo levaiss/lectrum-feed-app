@@ -7,6 +7,8 @@ import { type CommentModel } from '../../types/CommentModel'
 
 // Components
 import Moment from 'react-moment'
+import { PostStyled } from '../styled/PostStyled'
+import { LikeButtonStyled } from '../styled/LikeButtonStyled'
 import { LikeIcon } from '../../theme/assets/like'
 import { CommentIcon } from '../../theme/assets/comment'
 import { CommentsForm } from '../forms/CommentsForm'
@@ -31,7 +33,7 @@ export const Post: FC<PostProps> = ({ post }) => {
   }
 
   return (
-        <section className = 'post'>
+        <PostStyled>
             <UiAvatar src = { post?.author.avatar } alt = { `${post?.author.name} avatar` } />
             <a href = '#' title = { post?.author.name }>{ post?.author.name }</a>
             <Moment
@@ -39,13 +41,13 @@ export const Post: FC<PostProps> = ({ post }) => {
                 fromNow />
             <p>{ post.body }</p>
             <div className = 'reaction-controls'>
-                <section className = 'like'>
+                <LikeButtonStyled>
                     <div><span>{ Array.isArray(post.likes) && post.likes.length }</span></div>
                     <span className = 'icon'>
                         <LikeIcon />
                         Like
                     </span>
-                </section>
+                </LikeButtonStyled>
                 <span
                     onClick = { handlerOnCommentsIconClick }
                     className = { `comment ${isCommentsVisible ? 'comment-fill' : ''}` }>
@@ -68,6 +70,6 @@ export const Post: FC<PostProps> = ({ post }) => {
                     </ul>
                 </>
             }
-        </section>
+        </PostStyled>
   )
 }
