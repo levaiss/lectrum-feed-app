@@ -1,4 +1,4 @@
-# Професійний курс по React, Redux, MobX, TypeScript
+# Professional course on React, Redux, MobX, TypeScript
 
 1. Install dependencies:
 
@@ -8,7 +8,7 @@ yarn
 npm i
 ```
 
-2. Run dev mode:
+2. Run development server
 
 ```sh
 yarn dev
@@ -16,7 +16,7 @@ yarn dev
 npm run dev
 ```
 
-3. Build prod:
+3. Build for prod:
 
 ```sh
 yarn build
@@ -24,7 +24,7 @@ yarn build
 npm run build
 ```
 
-4. For run in `production` mode:
+4. Run server in `production` mode:
 
 ```sh
 yarn build && yarn start  
